@@ -8,7 +8,8 @@ function validations(){
         rules:{
             txtFullName:{
                 required: true,
-                minlength: 3
+                minlength: 3,
+                text: true
             },
             txtAddress:{
                 required: true
@@ -20,17 +21,22 @@ function validations(){
                 maxlength: 10
             },
             cmbCategory:{
-                required: true
+                required: function(){
+                    return isServiceProvider === 1;
+                }
             },
             txtServiceArea:{
-                required: true,
+                required: function(){
+                    return isServiceProvider === 1;
+                },
                 minlength: 3
             }
         },
         messages:{
             txtFullName:{
                 required: "This field is required.",
-                minlength: "At least three letters need"
+                minlength: "At least three letters need",
+                text:"only letters"
             },
             txtAddress:{
                 required: "This field is required."
@@ -48,20 +54,43 @@ function validations(){
                 minlength: "At least three letters need"
             },
             errorElement: "span",
-            errorClass: "text-danger small d-block mt-1",
+            errorClass: "!text-red-600 !text-xs !block !mt-1 !font-semibold",
 
             highlight: function(element) {
-                $(element).addClass('is-invalid').removeClass('is-valid');
+                $(element)
+                    .addClass('!border-red-500 !focus:ring-red-500 !focus:border-red-500')
+                    .removeClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
             },
             unhighlight: function(element) {
-                $(element).removeClass('is-invalid');
+                $(element)
+                    .removeClass('!border-red-500 !focus:ring-red-500 !focus:border-red-500')
+                    .addClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
             }
         }
     });
 }
 
 function events(){
-    $('#btnSubmitProfile').click(function(){
-        alert('hello');
+
+    $('#btnSubmitProfile').click(function(e){
+        e.preventDefault();
+
+        let fullName = $('#txtFullName').val();
+        let address = $('#txtAddress').val();
+        let mobile = $('#txtMobile').val();
+        let category = $('#cmbCategory').val();
+        let serviceArea = $('#txtServiceArea').val();
+
+        data = {
+            "fullName":fullName,
+            "address":address,
+            "mobile":mobile,
+            "category":category,
+            "serviceArea":serviceArea
+        }
+
+
+
+
     });
 }

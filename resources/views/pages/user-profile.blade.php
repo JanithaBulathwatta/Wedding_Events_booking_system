@@ -1,6 +1,21 @@
 @extends('layout.master')
 
 @section('customCSS')
+<style>
+    .error {
+        color: #ef4444 !important;
+        font-size: 1rem !important;
+        display: block !important;
+        margin-top: 0.25rem !important;
+        font-weight: 600 !important;
+    }
+    input.error, select.error, textarea.error {
+        border-color: #ef4444 !important;
+    }
+    input.error:focus, select.error:focus, textarea.error:focus {
+        box-shadow: 0 0 0 2px rgba(239, 68, 68, 0.5) !important;
+    }
+</style>
 @endsection
 
 @section('content')
@@ -27,7 +42,7 @@
                 <label for="fullName" class="block text-sm font-bold text-gray-900 mb-2">Full Name</label>
                 <input type="text" id="txtFullName" name="txtFullName" required
                     class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm placeholder-gray-600 bg-white/60 text-gray-950 font-semibold"
-                    placeholder="John Doe">
+                    placeholder="John Doe" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '')">
             </div>
 
             <div>
@@ -43,7 +58,7 @@
                     class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm placeholder-gray-600 bg-white/60 text-gray-950 font-semibold"
                     placeholder="07XXXXXXXX">
             </div>
-
+            
             <div class="pt-4 mt-6 border-t border-white/40 space-y-6">
                 <div class="bg-indigo-950/10 p-4 rounded-xl border border-white/30">
                     <h3 class="text-md font-extrabold text-indigo-900 mb-1">Service Professional Information</h3>
@@ -82,6 +97,6 @@
 @endsection
 
 @section('customJS')
-    <script src="{{ asset('controllers/user-profile.js') }}?v={{ filemtime(public_path('controllers/user-profile.js')) }}">
-    </script>
+    <script src="{{ asset('controllers/user-profile.js') }}?v={{ filemtime(public_path('controllers/user-profile.js')) }}"></script>
+    <script>const isServiceProvider = {{ Auth::user()->is_provider ?? 0 }};</script>
 @endsection
