@@ -11,7 +11,6 @@
 <body>
     @yield('content')
 
-
     @include('libraries.script')
     @yield('customJS')
         <script>
@@ -21,10 +20,9 @@
                             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                         }
                     });
-                    // $("#overlay-spinner").fadeIn(100);
-                    // init();
-                    // events();
-                    // validations();
+                    init();
+                    events();
+                    validations();
                 });
         </script>
 </body>

@@ -34,18 +34,26 @@ class RegisteredUserController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'string', 'lowercase', 'email', 'max:255', 'unique:'.User::class],
             'password' => ['required', 'confirmed', Rules\Password::defaults()],
+            'role' => ['required', 'string', 'in:customer,provider'],
         ]);
+
+        $isCustomer = ($request->role === 'customer') ? 1 : 0;
+        $isProvider = ($request->role === 'provider') ? 1 : 0;
 
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
             'password' => Hash::make($request->password),
+            'is_customer' => $isCustomer,
+            'is_provider' => $isProvider,
+            'is_admin' => 0,
+            'record_status' => 1,
         ]);
 
         event(new Registered($user));
 
         Auth::login($user);
 
-        return redirect(route('dashboard', absolute: false));
+        return redirect()->route('userProfile.show');
     }
 }
