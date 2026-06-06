@@ -2,9 +2,9 @@
 
 @section('customCSS')
 <style>
-    .error {
+    span.error {
         color: #ef4444 !important;
-        font-size: 1rem !important;
+        font-size: 0.875rem !important;
         display: block !important;
         margin-top: 0.25rem !important;
         font-weight: 600 !important;
@@ -58,32 +58,34 @@
                     class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm placeholder-gray-600 bg-white/60 text-gray-950 font-semibold"
                     placeholder="07XXXXXXXX">
             </div>
-            
-            <div class="pt-4 mt-6 border-t border-white/40 space-y-6">
-                <div class="bg-indigo-950/10 p-4 rounded-xl border border-white/30">
-                    <h3 class="text-md font-extrabold text-indigo-900 mb-1">Service Professional Information</h3>
-                    <p class="text-xs text-gray-900 font-bold">Provide details about the services you offer.</p>
-                </div>
+            @if ($user->is_provider == 1)
+                <div class="pt-4 mt-6 border-t border-white/40 space-y-6">
+                    <div class="bg-indigo-950/10 p-4 rounded-xl border border-white/30">
+                        <h3 class="text-md font-extrabold text-indigo-900 mb-1">Service Professional Information</h3>
+                        <p class="text-xs text-gray-900 font-bold">Provide details about the services you offer.</p>
+                    </div>
 
-                <div>
-                    <label for="category" class="block text-sm font-bold text-gray-900 mb-2">Service Category</label>
-                    <select id="cmbCategory" name="cmbCategory" required
-                        class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm bg-white/60 text-gray-950 font-semibold pr-10">
-                        <option value="" disabled selected class="text-gray-600">Select your service</option>
-                        <option value="1">Asthaka (අෂ්ටක)</option>
-                        <option value="2">Poruwa Decoration (පෝරුව ඩෙකරේෂන්)</option>
-                        <option value="3">Traditional Dancing (උඩරට නැටුම්)</option>
-                        <option value="4">Photography (ඡායාරූපකරණය)</option>
-                    </select>
-                </div>
+                    <div>
+                        <label for="category" class="block text-sm font-bold text-gray-900 mb-2">Service Category</label>
+                        <select id="cmbCategory" name="cmbCategory" required
+                            class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm bg-white/60 text-gray-950 font-semibold pr-10">
+                            <option value="" disabled selected class="text-gray-600">Select your service</option>
+                            <option value="1">Asthaka (අෂ්ටක)</option>
+                            <option value="2">Poruwa Decoration (පෝරුව ඩෙකරේෂන්)</option>
+                            <option value="3">Traditional Dancing (උඩරට නැටුම්)</option>
+                            <option value="4">Photography (ඡායාරූපකරණය)</option>
+                        </select>
+                    </div>
 
-                <div>
-                    <label for="serviceArea" class="block text-sm font-bold text-gray-900 mb-2">Service Areas</label>
-                    <textarea id="txtServiceArea" name="txtServiceArea" rows="3" required
-                        class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm placeholder-gray-600 bg-white/60 text-gray-950 font-semibold"
-                        placeholder="e.g., Kandy, Colombo, Matale"></textarea>
+                    <div>
+                        <label for="serviceArea" class="block text-sm font-bold text-gray-900 mb-2">Service Areas</label>
+                        <textarea id="txtServiceArea" name="txtServiceArea" rows="3" required
+                            class="w-full px-4 py-3 rounded-xl border border-white/50 focus:ring-2 focus:ring-indigo-600 focus:border-indigo-600 transition duration-200 shadow-sm placeholder-gray-600 bg-white/60 text-gray-950 font-semibold"
+                            placeholder="e.g., Kandy, Colombo, Matale"></textarea>
+                    </div>
                 </div>
-            </div>
+            @endif
+
 
             <div class="pt-4">
                 <button type="submit" id="btnSubmitProfile"

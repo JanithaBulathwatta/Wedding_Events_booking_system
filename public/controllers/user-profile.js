@@ -9,7 +9,6 @@ function validations(){
             txtFullName:{
                 required: true,
                 minlength: 3,
-                text: true
             },
             txtAddress:{
                 required: true
@@ -36,7 +35,6 @@ function validations(){
             txtFullName:{
                 required: "This field is required.",
                 minlength: "At least three letters need",
-                text:"only letters"
             },
             txtAddress:{
                 required: "This field is required."
@@ -53,19 +51,15 @@ function validations(){
                 required: "This field is required.",
                 minlength: "At least three letters need"
             },
-            errorElement: "span",
-            errorClass: "!text-red-600 !text-xs !block !mt-1 !font-semibold",
+        },
+        errorElement: "span",
+        errorClass: "error",
 
-            highlight: function(element) {
-                $(element)
-                    .addClass('!border-red-500 !focus:ring-red-500 !focus:border-red-500')
-                    .removeClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
-            },
-            unhighlight: function(element) {
-                $(element)
-                    .removeClass('!border-red-500 !focus:ring-red-500 !focus:border-red-500')
-                    .addClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
-            }
+        highlight: function(element) {
+            $(element).removeClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
+        },
+        unhighlight: function(element) {
+            $(element).addClass('border-white/50 focus:ring-indigo-600 focus:border-indigo-600');
         }
     });
 }
@@ -88,9 +82,23 @@ function events(){
             "category":category,
             "serviceArea":serviceArea
         }
+        if($('#frmProfileSetup').valid()){
+            setUserProfile(data);
+        }
+    });
+}
 
+function setUserProfile(data){
+    $.ajax({
+        type: "POST",
+        url: "/set-user-profile",
+        data: data,
+        dataType: "json",
+        success: function (response) {
 
+        },
+        error:function(xhr){
 
-
+        }
     });
 }
