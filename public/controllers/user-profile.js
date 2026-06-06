@@ -95,10 +95,15 @@ function setUserProfile(data){
         data: data,
         dataType: "json",
         success: function (response) {
-
+            if(response.status == 200){
+                console.log(response);
+                alert(response.message);
+                window.location.href = response.redirect;
+                $('#frmProfileSetup')[0].reset();
+            }
         },
         error:function(xhr){
-
+            console.log(xhr.responseText);
         }
     });
 }

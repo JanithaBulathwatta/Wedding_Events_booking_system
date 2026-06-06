@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UserProfileServiceRepository implements UserProfileServiceInterface{
 
     public function setUserProfile($request){
+
         $fullName = $request->fullName;
         $address = $request->address;
         $mobile = $request->mobile;
@@ -39,6 +40,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
                 ]);
 
             $redirectUrl = route('provider.dashboard');
+
         }else{
             DB::table('user_profile')
                 ->insert([
@@ -56,11 +58,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
         return[
             "status"=>200,
             "message"=>"you are succesfully Registered",
-            "rederect"=>$redirectUrl
+            "redirect"=>$redirectUrl
         ];
-
-
-
     }
-
 }

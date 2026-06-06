@@ -9,13 +9,22 @@
 </head>
     @include('libraries.styles')
     @yield('customCSS')
-<body>
-    @include('components.nav-bar')
+<body class="antialiased h-screen overflow-hidden m-0 p-0">
+    <div class="fixed top-0 left-0 right-0 h-16 z-50 bg-slate-950 border-b border-slate-900">
+        @include('components.nav-bar')
+    </div>
 
-    @yield('content')
+    <div class="flex h-screen pt-16 overflow-hidden">
+
+        @include('components.side-bar')
+
+        <main class="flex-1 h-full p-6 md:p-10 overflow-y-auto">
+            @yield('content')
+        </main>
+
+    </div>
 
     @include('libraries.script')
-    
     @yield('customJS')
         <script>
                 $(document).ready(function() {
