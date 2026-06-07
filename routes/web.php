@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserProfileController;
@@ -28,6 +29,9 @@ Route::middleware('auth')->group(function () {
 
     //provider routes
     Route::get('/get-provider-dashboard',[ProviderController::class,'loadProviderDashboard'])->name('provider.dashboard');
+
+    //package routes
+    Route::get('/get-package-section',[PackageController::class,'loadPackageSection'])->name('package.show');
 });
 
 
