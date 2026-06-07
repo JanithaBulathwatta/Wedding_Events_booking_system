@@ -22,26 +22,14 @@
             </button>
         </div>
 
-        <!-- 🔍 Category Filter Tabs -->
         <div class="flex items-center space-x-2 overflow-x-auto pb-3 mb-6 scrollbar-none select-none">
-            <button
-                class="filter-btn active px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-amber-500 text-slate-950 shadow-md transition"
-                data-category="all">All</button>
-            <button
-                class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition"
-                data-category="ashtaka">Ashtaka (අෂ්ටක)</button>
-            <button
-                class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition"
-                data-category="decorations">Poruwa & Decoration</button>
-            <button
-                class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition"
-                data-category="dancing">Traditional Dancing</button>
-            <button
-                class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition"
-                data-category="photography">Photography</button>
-            <button
-                class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-800 text-slate-400 hover:bg-slate-700 hover:text-amber-400 transition"
-                data-category="drumming">Udarata Bera</button>
+            <button class="filter-btn active px-4 py-2 text-xs md:text-sm font-semibold rounded-full bg-amber-500 text-slate-950 shadow-sm transition" data-category="all">All</button>
+
+            @foreach($serviceTypes as $type)
+                <button class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-amber-600 transition" data-category="{{ $type->id }}">
+                    {{ $type->display_name_si }}
+                </button>
+            @endforeach
         </div>
 
         <div id="packagesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -92,7 +80,6 @@
         <div
             class="absolute bottom-0 md:relative w-full h-[90vh] md:h-auto md:max-w-xl bg-slate-900 border-t md:border border-slate-800 rounded-t-3xl md:rounded-2xl shadow-2xl flex flex-col overflow-hidden transform translate-y-10 md:translate-y-0 transition-all duration-300">
 
-            <!-- Modal Header -->
             <div
                 class="px-6 py-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50 sticky top-0 backdrop-blur-md">
                 <h2 id="modalTitle" class="text-lg font-bold text-amber-400">Add New Package</h2>
@@ -103,21 +90,17 @@
                 </button>
             </div>
 
-            <!-- Modal Body (Scrollable form) -->
             <form id="packageForm" class="p-6 space-y-4 overflow-y-auto flex-1">
                 <input type="hidden" id="packageId" name="id">
 
-                <!-- 1. Service Type Dropdown -->
                 <div class="flex flex-col space-y-1.5">
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type / සේවා වර්ගය</label>
                     <select id="cmbServiceType" name="cmbServiceType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
-                        <option value="" disabled selected>Select Service Type...</option>
-                        <option value="ashtaka">Ashtaka (අෂ්ටක)</option>
-                        <option value="decorations">Poruwa & Decoration (පෝරුව ඩෙකරේෂන්)</option>
-                        <option value="dancing">Traditional Dancing (උඩරට නැටුම්)</option>
-                        <option value="photography">Photography (ඡායාරූපකරණය)</option>
-                        <option value="drumming">Udarata Bera Wadana (උඩරට බෙර වාදනය)</option>
+                        @foreach($serviceTypes as $type)
+                            <!-- මෙතන value එකට වැටෙන්නේ 1, 2, 3 වගේ integer ID එක -->
+                            <option value="{{ $type->id }}">{{ $type->display_name_si }}</option>
+                        @endforeach
                     </select>
                 </div>
 
