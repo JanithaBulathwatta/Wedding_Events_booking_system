@@ -39,7 +39,7 @@
 
 
 <!-- 💻 2. DESKTOP SIDEBAR (ලැප්ටොප්/මොබයිල් නොවන ස්ක්‍රීන් වලට විතරක් පේන ඔරිජිනල් සයිඩ් බාර් එක) -->
-<aside class="hidden md:flex w-64 min-h-screen bg-slate-900 border-r border-amber-500/10 flex-col justify-between shrink-0 font-sans px-6 py-8">
+<aside class="hidden md:flex w-72 min-h-screen bg-slate-900 border-r border-amber-500/10 flex-col justify-between shrink-0 font-sans px-6 py-8">
     <div class="space-y-6">
         <nav class="space-y-2 flex flex-col">
 
