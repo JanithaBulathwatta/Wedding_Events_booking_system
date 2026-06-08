@@ -48,7 +48,7 @@ function events(){
 
             $.ajax({
                 type: "POST",
-                url: "url",
+                url: "/set-package-details",
                 data: data,
                 dataType: "json",
                 success: function (response) {

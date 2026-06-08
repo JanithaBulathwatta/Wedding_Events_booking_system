@@ -94,40 +94,35 @@
                 <input type="hidden" id="packageId" name="id">
 
                 <div class="flex flex-col space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type / සේවා වර්ගය</label>
+                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type</label>
                     <select id="cmbServiceType" name="cmbServiceType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
                         @foreach($serviceTypes as $type)
-                            <!-- මෙතන value එකට වැටෙන්නේ 1, 2, 3 වගේ integer ID එක -->
                             <option value="{{ $type->id }}">{{ $type->display_name_si }}</option>
                         @endforeach
                     </select>
                 </div>
 
-                <!-- 2. Package Name -->
                 <div class="flex flex-col space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Name / පැකේජයේ නම</label>
+                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Name</label>
                     <input type="text" id="txtPackageName" name="txtPackageName" placeholder="e.g., Gold, Silver, Basic Combo"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
                 </div>
 
-                <!-- 3. Price -->
                 <div class="flex flex-col space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Price (LKR) / මිල</label>
+                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Price (LKR)</label>
                     <input type="number" id="txtPackagePrice" name="txtPackagePrice" placeholder="e.g., 50000"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
                 </div>
 
-                <!-- 4. Description -->
                 <div class="flex flex-col space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Description / හැඳින්වීම</label>
+                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Description</label>
                     <textarea id="txtPackageDescription" name="txtPackageDescription" rows="3" placeholder="Enter package details..."
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition resize-none"></textarea>
                 </div>
 
             </form>
 
-            <!-- Modal Footer -->
             <div class="px-6 py-4 border-t border-slate-800 bg-slate-950/40 flex items-center space-x-3 sticky bottom-0">
                 <button
                     class="flex-1 border border-slate-700 text-slate-300 font-medium py-3 rounded-xl hover:bg-slate-800 transition modal-close-trigger">Cancel</button>

@@ -32,6 +32,7 @@ Route::middleware('auth')->group(function () {
 
     //package routes
     Route::get('/get-package-section',[PackageController::class,'loadPackageSection'])->name('package.show');
+    Route::post('/set-package-details',[PackageController::class,'setPackageDetails']);
 });
 
 
