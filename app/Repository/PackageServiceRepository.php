@@ -9,9 +9,8 @@ use Illuminate\Support\Facades\DB;
 class PackageServiceRepository implements PackageServiceInterface{
 
     public function setPackageDetails($request){
-        dd($request->all());
         $serviceType = $request->serviceType;
-        $PackageName = $request->PackageName;
+        $PackageType = $request->PackageType;
         $packagePrice = $request->packagePrice;
         $description = $request->description;
         $userId = Auth::id();
@@ -19,16 +18,38 @@ class PackageServiceRepository implements PackageServiceInterface{
         DB::table('packages')->insert([
             "user_id"=>$userId,
             "service_type_id"=>$serviceType,
-            "package_name"=>$PackageName,
+            "package_type_id"=>$PackageType,
             "price"=>$packagePrice,
             "description"=>$description,
             "created_at"=>Carbon::now(),
-            "upated_at"=>Carbon::now()
+            "updated_at"=>Carbon::now()
         ]);
 
         return[
             "status"=>200,
             "message"=>"Succuessfully added the package"
+        ];
+    }
+
+    public function getPackageDetails($request){
+        $userId = Auth::id();
+
+        $packages = DB::table('packages')
+                            ->join('service_types', 'packages.service_type_id', '=', 'service_types.id')
+                            ->join('package_type', 'packages.package_type_id', '=', 'package_type.id')
+                            ->select(
+                                'packages.*',
+                                'service_types.display_name_si as service_type_name',
+                                'package_type.name as package_type_name'
+                            )
+                            ->where('packages.user_id', $userId)
+                            ->where('packages.record_status', 1)
+                            ->where('service_types.record_status',1)
+                            ->where('package_type.record_status',1)
+                            ->get();
+        return[
+            "status"=>200,
+            "resultSet"=>$packages
         ];
     }
 

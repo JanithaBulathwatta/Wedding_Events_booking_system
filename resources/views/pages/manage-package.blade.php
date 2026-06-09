@@ -23,54 +23,24 @@
         </div>
 
         <div class="flex items-center space-x-2 overflow-x-auto pb-3 mb-6 scrollbar-none select-none">
-            <button class="filter-btn active px-4 py-2 text-xs md:text-sm font-semibold rounded-full bg-amber-500 text-slate-950 shadow-sm transition" data-category="all">All</button>
+            <button
+                class="filter-btn active px-4 py-2 text-xs md:text-sm font-semibold rounded-full bg-amber-500 text-slate-950 shadow-sm transition"
+                data-category="all">All</button>
 
-            @foreach($serviceTypes as $type)
-                <button class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-amber-600 transition" data-category="{{ $type->id }}">
+            @foreach ($serviceTypes as $type)
+                <button
+                    class="filter-btn px-4 py-2 text-xs md:text-sm font-medium rounded-full bg-slate-100 text-slate-600 hover:bg-slate-200 hover:text-amber-600 transition"
+                    data-category="{{ $type->id }}">
                     {{ $type->display_name_si }}
                 </button>
             @endforeach
         </div>
 
         <div id="packagesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-
-            <div class="package-card bg-slate-900 border border-slate-800 rounded-2xl p-5 flex flex-col justify-between hover:border-amber-500/30 transition duration-300 shadow-xl relative overflow-hidden group"
-                data-type="ashtaka">
-                <div
-                    class="absolute top-0 right-0 bg-amber-500/10 text-amber-400 text-[11px] font-semibold px-3 py-1 rounded-bl-xl border-l border-b border-amber-500/10">
-                    Ashtaka
-                </div>
-                <div>
-                    <h3 class="text-lg font-bold text-slate-100 group-hover:text-amber-400 transition mt-2">Premium Ashtaka
-                        Combo</h3>
-                    <p class="text-sm text-slate-400 mt-2 line-clamp-2">සාම්ප්‍රදායික චාරිත්‍ර වාරිත්‍ර සියල්ල ඇතුළත්
-                        සම්පූර්ණ අෂ්ටක සේවාව.</p>
-                    <div class="text-xl font-black text-amber-400 mt-4">LKR 45,000</div>
-                </div>
-                <div class="flex space-x-3 mt-6 border-t border-slate-800/60 pt-4">
-                    <button
-                        class="btn-edit flex-1 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-semibold py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition"
-                        data-id="1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z">
-                            </path>
-                        </svg>
-                        <span>Edit</span>
-                    </button>
-                    <button
-                        class="btn-delete flex-1 bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 text-xs font-semibold py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition"
-                        data-id="1">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round"
-                                d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16">
-                            </path>
-                        </svg>
-                        <span>Delete</span>
-                    </button>
-                </div>
-            </div>
+            
         </div>
+
+
     </div>
 
     <div id="packageModal"
@@ -97,7 +67,7 @@
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type</label>
                     <select id="cmbServiceType" name="cmbServiceType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
-                        @foreach($serviceTypes as $type)
+                        @foreach ($serviceTypes as $type)
                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
                     </select>
@@ -107,7 +77,7 @@
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Type</label>
                     <select id="cmbPackageType" name="cmbPackageType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
-                        @foreach($packageTypes as $type)
+                        @foreach ($packageTypes as $type)
                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
                     </select>

@@ -9,4 +9,9 @@ class PackageService{
         $result = app()->make(PackageServiceInterface::class)->setPackageDetails($request);
         return $result;
     }
+
+    public static function getPackageDetails($request){
+        $result = app()->make(PackageServiceInterface::class)->getPackageDetails($request);
+        return $result;
+    }
 }
