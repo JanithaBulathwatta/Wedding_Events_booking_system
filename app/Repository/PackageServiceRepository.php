@@ -15,6 +15,18 @@ class PackageServiceRepository implements PackageServiceInterface{
         $description = $request->description;
         $userId = Auth::id();
 
+        $isAvailable = DB::table('packages')->where('user_id',$userId)
+                                            ->where('service_type_id',$serviceType)
+                                            ->where('package_type_id',$PackageType)
+                                            ->where('record_status',1)
+                                            ->exists();
+        if($isAvailable){
+            return[
+                "status"=>400,
+                "message"=>"This Package is Already Exists"
+            ];
+        }
+
         DB::table('packages')->insert([
             "user_id"=>$userId,
             "service_type_id"=>$serviceType,

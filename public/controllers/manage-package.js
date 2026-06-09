@@ -64,6 +64,13 @@ function events(){
                                 getPackageDetails();
                             }
                         });
+                    }else{
+                        Swal.fire({
+                            title: 'Warning!',
+                            text: response.message,
+                            icon: 'warning',
+                            confirmButtonText: 'ok'
+                        })
                     }
                 },
                 error:function(xhr){
@@ -73,7 +80,6 @@ function events(){
 
         });
 
-        // 📑 5. Filter Tabs Logic
         $(document).on('click', '.filter-btn', function() {
             $('.filter-btn')
                 .removeClass('active bg-amber-500 text-slate-950 font-semibold shadow-sm')

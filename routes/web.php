@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-package-section',[PackageController::class,'loadPackageSection'])->name('package.show');
     Route::post('/set-package-details',[PackageController::class,'setPackageDetails']);
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
+
+    //service provider dashboard routes
+    Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
 });
 
 

@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Document</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
     @include('libraries.styles')
     @yield('customCSS')
@@ -15,7 +16,7 @@
     @yield('content')
 
     @include('libraries.script')
-    
+
     @yield('customJS')
         <script>
                 $(document).ready(function() {

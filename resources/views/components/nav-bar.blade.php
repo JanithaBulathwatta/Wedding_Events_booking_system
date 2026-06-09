@@ -8,20 +8,13 @@
                         <img src="{{ asset('storage/images/Gemini_Generated_Image_7mjnvx7mjnvx7mjn-removebg-preview.png') }}"
                             alt="අෂ්ටක Logo"
                             class="w-14 h-14 object-contain rounded-full transition-all duration-200"
-                            style="image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
+                            style="width: 56px; height: 56px; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
                     </div>
                     <span class="text-3xl font-extrabold tracking-wide text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500 hover:brightness-110 transition" style="font-family: 'Yatra One', 'Abhaya Libre', serif;">
                         අෂ්ටක
                     </span>
                 </a>
             </div>
-
-            {{-- <div class="hidden md:flex items-center space-x-8 font-medium text-slate-300">
-                <a href="#" class="text-amber-400 border-b-2 border-amber-400 px-1 py-1">Home</a>
-                <a href="#" class="hover:text-amber-400 transition duration-150 px-1 py-1">Services</a>
-                <a href="#" class="hover:text-amber-400 transition duration-150 px-1 py-1">About Us</a>
-                <a href="#" class="hover:text-amber-400 transition duration-150 px-1 py-1">Contact</a>
-            </div> --}}
 
             <div class="hidden md:flex items-center space-x-4">
                 @auth

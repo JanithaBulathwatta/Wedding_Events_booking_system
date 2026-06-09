@@ -19,7 +19,7 @@
         <!-- Card 2: Active Packages -->
         <div class="bg-slate-900 border border-slate-800/60 rounded-2xl p-6 relative overflow-hidden shadow-xl">
             <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Packages</p>
-            <h3 class="text-3xl font-black text-slate-100 mt-2">04</h3>
+            <h3 class="text-3xl font-black text-slate-100 mt-2 counter-value" data-target="{{ $packageCount }}">0</h3>
             <p class="text-xs text-slate-500 font-medium mt-1">Active services live</p>
         </div>
         <!-- Card 3: Total Earnings -->
@@ -42,5 +42,7 @@
 
 
 @section('customJS')
-
+    <script
+        src="{{ asset('controllers/service-provider-dashboard.js') }}?v={{ filemtime(public_path('controllers/service-provider-dashboard.js')) }}">
+    </script>
 @endsection
