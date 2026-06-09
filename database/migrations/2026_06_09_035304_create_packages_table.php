@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
             $table->foreignId('service_type_id')->constrained('service_types')->onDelete('cascade');
-            $table->string('package_name');
+            $table->foreignId('package_type_id')->constrained('package_type')->onDelete('cascade');
             $table->integer('price');
             $table->string('description')->nullable();
             $table->tinyInteger('is_active')->default(1);

@@ -12,7 +12,9 @@ class PackageController extends Controller
 
         $serviceTypes = DB::table('service_types')
                             ->get();
-        return view('pages.manage-package',compact('serviceTypes'));
+        $packageTypes = DB::table('package_type')
+                            ->get();
+        return view('pages.manage-package',compact('serviceTypes,packageTypes'));
     }
     public function setPackageDetails(Request $request){
         dd($request->all());

@@ -98,15 +98,19 @@
                     <select id="cmbServiceType" name="cmbServiceType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
                         @foreach($serviceTypes as $type)
-                            <option value="{{ $type->id }}">{{ $type->display_name_si }}</option>
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
                     </select>
                 </div>
 
                 <div class="flex flex-col space-y-1.5">
-                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Name</label>
-                    <input type="text" id="txtPackageName" name="txtPackageName" placeholder="e.g., Gold, Silver, Basic Combo"
+                    <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Type</label>
+                    <select id="cmbPackageType" name="cmbPackageType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
+                        @foreach($packageTypes as $type)
+                            <option value="{{ $type->id }}">{{ $type->name }}</option>
+                        @endforeach
+                    </select>
                 </div>
 
                 <div class="flex flex-col space-y-1.5">

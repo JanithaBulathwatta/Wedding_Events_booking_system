@@ -52,7 +52,15 @@ function events(){
                 data: data,
                 dataType: "json",
                 success: function (response) {
-                    closeModal();
+                    if(response.status == 200){
+                        Swal.fire({
+                            title: 'Success!',
+                            text: response.message,
+                            icon: 'success',
+                            confirmButtonText: 'ok'
+                        });
+                        closeModal();
+                    }
                 },
                 error:function(xhr){
                     console.log(xhr.responseText);
