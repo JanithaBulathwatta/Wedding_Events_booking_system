@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CustomerController;
+use App\Http\Controllers\MapFinderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProviderController;
@@ -37,6 +38,9 @@ Route::middleware('auth')->group(function () {
 
     //service provider dashboard routes
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
+
+    //map
+    Route::get('/get-map-details',[MapFinderController::class,'loadMap']);
 });
 
 
