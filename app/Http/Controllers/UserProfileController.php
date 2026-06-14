@@ -15,11 +15,14 @@ class UserProfileController extends Controller
         $user = DB::table('users')
                     ->where('id',Auth::id())
                     ->first();
-        return view('pages.user-profile',compact('user'));
+
+        $districts = DB::table('districts')
+                        ->get();
+        return view('pages.user-profile',compact('user','districts'));
     }
 
     public function setUserProfile(Request $request){
-        
+
         $response = UserProfileService::setUserProfile($request);
         return response()->json($response);
     }
