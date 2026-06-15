@@ -7,6 +7,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class AuthenticatedSessionController extends Controller
@@ -29,6 +30,13 @@ class AuthenticatedSessionController extends Controller
         $request->session()->regenerate();
 
         $request->session()->forget('url.intended');
+
+        $isExistsCus = DB::table('user_profile')->where('user_id',$request->user()->id)->exists();
+        $isExistsPro = DB::table('service_provider_details')->where('user_id',$request->user()->id)->exists();
+
+        if(!$isExistsCus || !$isExistsPro){
+            return redirect()->route('userProfile.show');
+        }
 
         if($request->user()->is_provider == 1){
             return redirect()->route('provider.dashboard');

@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\DB;
 class UserProfileServiceRepository implements UserProfileServiceInterface{
 
     public function setUserProfile($request){
-
+        dd($request->all());
         $fullName = $request->fullName;
         $address = $request->address;
         $mobile = $request->mobile;

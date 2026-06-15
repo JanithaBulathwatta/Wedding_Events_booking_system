@@ -72,18 +72,40 @@ function events(){
         let fullName = $('#txtFullName').val();
         let address = $('#txtAddress').val();
         let mobile = $('#txtMobile').val();
-        let category = $('#cmbCategory').val();
-        let serviceArea = $('#txtServiceArea').val();
+        let district = $('#cmbDistrict').val();
+        let city = $('#txtCity').val();
+        let profileType = $("input[name='profile_type']:checked").val();
+        let groupName = $('#txtGroupName').val();
+        let profileImage = $('#fileProfilePic')[0].files[0];
 
-        data = {
-            "fullName":fullName,
-            "address":address,
-            "mobile":mobile,
-            "category":category,
-            "serviceArea":serviceArea
+        let formData = new FormData();
+
+        formData.append('txtFullName', fullName);
+        formData.append('txtAddress', address);
+        formData.append('txtMobile', mobile);
+        formData.append('cmbDistrict', district);
+        formData.append('txtCity', city);
+        formData.append('profile_type', profileType);
+        formData.append('txtGroupName', groupName ? groupName : '');
+        if (profileImage) {
+            formData.append('fileProfilePic', profileImage);
         }
+
         if($('#frmProfileSetup').valid()){
-            setUserProfile(data);
+            setUserProfile(formData);
+        }
+    });
+
+    $("input[name='profile_type']").on('change', function() {
+
+        let selectedValue = $(this).val();
+
+        if (selectedValue === 'group') {
+            $('#group-name-wrapper').removeClass('hidden');
+            $('#txtGroupName').attr('required', true);
+        } else {
+            $('#group-name-wrapper').addClass('hidden');
+            $('#txtGroupName').attr('required', false).val('');
         }
     });
 }
@@ -94,6 +116,8 @@ function setUserProfile(data){
         url: "/set-user-profile",
         data: data,
         dataType: "json",
+        processData: false,
+        contentType: false,
         success: function (response) {
             if(response.status == 200){
                 console.log(response);
