@@ -108,6 +108,36 @@ function events(){
             $('#txtGroupName').attr('required', false).val('');
         }
     });
+
+    $('#fileProfilePic').on('change', function() {
+        let file = this.files[0];
+
+        if (file) {
+            $('#file-name-text').text(file.name);
+            let reader = new FileReader();
+            reader.onload = function(e) {
+                $('#img-preview').attr('src', e.target.result);
+            }
+            reader.readAsDataURL(file);
+
+            $('#file-name-preview').removeClass('hidden');
+        } else {
+            $('#file-name-preview').addClass('hidden');
+        }
+    });
+
+    $('#btn-remove-image').on('click', function(e) {
+        e.preventDefault();
+        resetImagePreview();
+    });
+}
+
+function resetImagePreview() {
+
+    $('#fileProfilePic').val('');
+    $('#img-preview').attr('src', '');
+    $('#file-name-text').text('');
+    $('#file-name-preview').addClass('hidden').removeClass('flex');
 }
 
 function setUserProfile(data){

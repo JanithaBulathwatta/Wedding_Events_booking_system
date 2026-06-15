@@ -4,17 +4,42 @@ use App\Repository\Interfaces\UserProfileServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Http;
 
 class UserProfileServiceRepository implements UserProfileServiceInterface{
 
     public function setUserProfile($request){
-        dd($request->all());
-        $fullName = $request->fullName;
-        $address = $request->address;
-        $mobile = $request->mobile;
-        $category = $request->category;
-        $area = $request->serviceArea;
+
+        $fullName = $request->txtFullName;
+        $address = $request->txtAddress;
+        $mobile = $request->txtMobile;
+        $district = $request->cmbDistrict;
+        $city = $request->txtCity;
+        $profile_type = $request->profile_type;
+        $groupName = $request->txtGroupName;
+        $imagePath = $request->file('fileProfilePic')->store('profile','public');
         $userId = Auth::id();
+        $districtName = DB::table('districts')->where('id',$district)->select('name')->get();
+
+        $providerLocation = "{$city},{$districtName},Sri Lanka";
+
+        $response = Http::withHeaders([
+            'User-Agent' => 'Ashtaka/1.0 (janithabulathwatta04@gmail.com)'
+        ])->get('https://nominatim.openstreetmap.org/search', [
+            'q' => $providerLocation,
+            'format' => 'json',
+            'limit' => 1
+        ]);
+        dd($response);
+        $latitude = null;
+        $longitude = null;
+
+        if ($response->successful() && isset($response->json()[0])) {
+            $latitude = $response->json()[0]['lat'];
+            $longitude = $response->json()[0]['lon'];
+        }
+        dd($latitude);
+
 
         $user = DB::table('users')
                     ->where('id',$userId)
@@ -32,8 +57,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
                 ]);
             DB::table('service_provider_details')
                 ->insert([
-                    "category_id" => $category,
-                    "service_area"=> $area,
+
                     "user_id" => $userId,
                     "created_at" => Carbon::now(),
                     "updated_at" => Carbon::now()
