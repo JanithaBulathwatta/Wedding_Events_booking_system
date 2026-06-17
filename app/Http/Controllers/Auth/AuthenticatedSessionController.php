@@ -34,7 +34,7 @@ class AuthenticatedSessionController extends Controller
         $isExistsCus = DB::table('user_profile')->where('user_id',$request->user()->id)->exists();
         $isExistsPro = DB::table('service_provider_details')->where('user_id',$request->user()->id)->exists();
 
-        if(!$isExistsCus || !$isExistsPro){
+        if(!$isExistsCus && !$isExistsPro){
             return redirect()->route('userProfile.show');
         }
 

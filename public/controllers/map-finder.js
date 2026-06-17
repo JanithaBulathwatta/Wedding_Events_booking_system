@@ -1,47 +1,16 @@
 function init(){
-
+    getProviderLocations();
 }
+
 function validations(){
 
 }
+
 function events(){
-    var map = L.map('map').setView([7.2906, 80.6337], 13);
-
-    // 2. OpenStreetMap එකෙන් සිතියමේ පින්තූර (Tiles) ටික මැප් එකට දානවා
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '© OpenStreetMap contributors'
-    }).addTo(map);
-
-    // 3. ඩේටාබේස් එකෙන් එන ප්‍රොවයිඩර්ලාගේ Dummy Array එකක් (ඉස්සරහට මේක Blade එකෙන් Live ගමු මචං)
-    var providers = [
-        { id: 1, name: "JB Photography", cat: "Photography", lat: 7.2906, lng: 80.6337, price: "Rs. 65,000" },
-        { id: 2, name: "Royal Taste Catering", cat: "Catering", lat: 7.2950, lng: 80.6400, price: "Rs. 1,200/pp" }
-    ];
-
-    var markers = {};
-
-    // 4. හැම ප්‍රොවයිඩර් කෙනෙක්ටම මැප් එක උඩ Pins (Markers) දානවා
-    providers.forEach(function(p) {
-        // මැප් එක උඩ පින් එකක් හදනවා
-        var marker = L.marker([p.lat, p.lng]).addTo(map);
-
-        // පින් එක ක්ලික් කරාම එන ලස්සන පොපප් එක (Popup Card)
-        var popupContent = `
-            <div class="p-1 font-sans">
-                <span class="text-[9px] font-bold text-amber-600 uppercase block">${p.cat}</span>
-                <h4 class="text-xs font-bold text-slate-900 mt-0.5">${p.name}</h4>
-                <p class="text-xs text-slate-600 mt-1">Starting: <b>${p.price}</b></p>
-                <a href="/provider/${p.id}" class="inline-block mt-2 px-2 py-1 text-[10px] font-bold bg-slate-900 text-white rounded-md no-underline">View Profile</a>
-            </div>
-        `;
-        marker.bindPopup(popupContent);
-
-        // මාකර් එක ඇරේ එකකට දාගන්නවා පස්සේ අල්ලගන්න ලේසි වෙන්න
-        markers[p.id] = marker;
-    });
 
     // 5. UX Feature: වම් පැත්තේ තියෙන කාඩ් එකක් ක්ලික් කරපු ගමන් මැප් එක ඒ තැනට සූම් වෙලා පොපප් එක ඇරෙනවා
     $('.provider-card').on('click', function() {
+        
         var lat = $(this).data('lat');
         var lng = $(this).data('lng');
         var id = $(this).data('id');
@@ -75,4 +44,52 @@ function events(){
             console.log("Location access denied by user.");
         });
     }
+}
+
+function getProviderLocations(){
+    // මැප් එක ලෝඩ් කරනවා
+    var map = L.map('map').setView([7.2906, 80.6337], 13);
+
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    $.ajax({
+        type: "GET",
+        url: "/get-provider-location-details",
+        dataType: "json",
+        success: function (response) {
+            if(response.status == 200){
+                var data = response.dataSet; // var දාලා ලෝකල් වාරිvariable එකක් කරන්න
+
+                // 🚀 jQuery $.each එක පාවිච්චි කරලා ලූප් කරමු
+                $.each(data, function(index, key){
+
+                    // 💡 String ආවොත් ෂුවර් වෙන්න float කරගන්නවා
+                    var lat = parseFloat(key.latitude);
+                    var lng = parseFloat(key.longitude);
+
+                    if (!isNaN(lat) && !isNaN(lng)) {
+                        // මැප් එක උඩ පින් එක හිටවනවා
+                        var marker = L.marker([lat, lng]).addTo(map);
+
+                        // Popup එක හදනවා
+                        var popupContent = `
+                            <div class="p-1 font-sans">
+                                <span class="text-[9px] font-bold text-amber-600 uppercase block">${key.name}</span>
+                                <h4 class="text-xs font-bold text-slate-900 mt-0.5">${key.mobile}</h4>
+                                <p class="text-xs text-slate-600 mt-1">City: <b>${key.city}</b></p>
+                                <a href="/provider/${key.id}" class="inline-block mt-2 px-2 py-1 text-[10px] font-bold bg-slate-900 text-white rounded-md no-underline">View Profile</a>
+                            </div>
+                        `;
+
+                        marker.bindPopup(popupContent);
+
+                        // ID එකෙන් මාකර් එක සේව් කරගන්නවා
+                        markers[key.id] = marker;
+                    }
+                });
+            }
+        },
+    });
 }

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
 
     //map
     Route::get('/get-map-details',[MapFinderController::class,'loadMap']);
+    Route::get('/get-provider-location-details',[MapFinderController::class,'getLocationDetails']);
 });
 
 
