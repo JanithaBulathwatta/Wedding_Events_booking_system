@@ -23,7 +23,7 @@
 
                 <div class="space-y-3">
                     <div class="relative">
-                        <input type="text" id="user-location-input" placeholder="Enter your location (e.g. Kandy)..."
+                        <input type="text" id="txtLocation" placeholder="Enter your location (e.g. Kandy)..."
                                class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                     </div>
 

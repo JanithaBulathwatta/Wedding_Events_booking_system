@@ -1,5 +1,6 @@
 var map;
 var markers = {};
+var userMarker;
 
 function init(){
     getProviderLocations();
@@ -11,13 +12,12 @@ function validations(){
 }
 
 function events(){
-    // 5. UX Feature: වම් පැත්තේ කාඩ් එකක් ක්ලික් කරාම මැප් එක සූම් වෙන එක
+
     $('.provider-card').on('click', function() {
         var lat = $(this).data('lat');
         var lng = $(this).data('lng');
         var id = $(this).data('id');
 
-        // දැන් 'map' එක Global නිසා මේක ලස්සනට වැඩ කරනවා
         if (map) {
             map.setView([lat, lng], 15, { animate: true, duration: 1 });
         }
@@ -26,10 +26,19 @@ function events(){
             markers[id].openPopup();
         }
     });
+
+    $('#txtLocation').on('keypress', function(e) {
+        if (e.which == 13) {
+            var searchQuery = $(this).val().trim();
+
+            if (searchQuery !== '') {
+                searchLocationViaOSM(searchQuery);
+            }
+        }
+    });
 }
 
 function getProviderLocations(){
-    // 💡 'var' කෑල්ල අයින් කරලා කෙළින්ම Global variable එකට මැප් එක Assign කරන්න
     map = L.map('map').setView([7.2906, 80.6337], 13);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -43,21 +52,14 @@ function getProviderLocations(){
         success: function (response) {
             if(response.status == 200){
                 var data = response.dataSet;
-
-                // ✅ අර කොමාවේ ලෙඩේ හැදුවා (console.log)
-                console.log(data);
-
-                // 🚀 jQuery $.each එකෙන් ලූප් කරනවා
                 $.each(data, function(index, key){
 
                     var lat = parseFloat(key.latitude);
                     var lng = parseFloat(key.longitude);
 
                     if (!isNaN(lat) && !isNaN(lng)) {
-                        // මැප් එක උඩ පින් එක හිටවනවා
                         var marker = L.marker([lat, lng]).addTo(map);
 
-                        // Popup එක හදනවා
                         var popupContent = `
                             <div class="p-1 font-sans">
                                 <span class="text-[9px] font-bold text-amber-600 uppercase block">${key.name}</span>
@@ -69,7 +71,6 @@ function getProviderLocations(){
 
                         marker.bindPopup(popupContent);
 
-                        // ID එකෙන් මාකර් එක සේව් කරගන්නවා
                         markers[key.id] = marker;
                     }
                 });
@@ -101,4 +102,52 @@ function getUserLiveLocation(){
             console.log("Location access denied by user.");
         });
     }
+}
+
+function searchLocationViaOSM(query) {
+    // ලංකාව ඇතුළේ විතරක් සර්ච් වෙන්න "Sri Lanka" කෑල්ල අගට එකතු කරනවා
+    var fullQuery = query + ", Sri Lanka";
+
+    $.ajax({
+        type: "GET",
+        url: "https://nominatim.openstreetmap.org/search", // කෙළින්ම OSM API එකට යනවා
+        data: {
+            q: fullQuery,
+            format: "json",
+            limit: 1
+        },
+        dataType: "json",
+        success: function(response) {
+            if (response && response.length > 0) {
+                var lat = parseFloat(response[0].lat);
+                var lng = parseFloat(response[0].lon);
+                var displayName = response[0].display_name.split(',')[0]; // මුල්ම නම විතරක් ගන්නවා (උදා: Kandy)
+
+                if (map) {
+                    // ⏱️ 3. මැප් එක සර්ච් කරපු තැනට Smoothව අරන් යනවා
+                    map.setView([lat, lng], 14, { animate: true, duration: 1.5 });
+
+                    // 🧹 4. කලින් තිබ්බ නිල් බෝලය මැප් එකෙන් අයින් කරනවා (නැත්නම් බෝල ගොඩක් ඉතුරු වෙයි)
+                    if (userMarker) {
+                        map.removeLayer(userMarker);
+                    }
+
+                    // 🔵 5. අලුත් තැන උඩ නිල් පාට බෝලය (Circle Marker) හිටවනවා
+                    userMarker = L.circleMarker([lat, lng], {
+                        radius: 10,
+                        fillColor: "#3b82f6",
+                        color: "#fff",
+                        weight: 2,
+                        opacity: 1,
+                        fillOpacity: 0.8
+                    }).addTo(map).bindPopup(`<b>Your Searched: ${displayName}</b>`).openPopup();
+                }
+            } else {
+                alert("Location not found!");
+            }
+        },
+        error: function(err) {
+            console.log("OSM Geocoding Error: ", err);
+        }
+    });
 }
