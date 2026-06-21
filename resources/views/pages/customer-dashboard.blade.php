@@ -116,9 +116,9 @@
                     </div>
 
                     <div class="p-4 relative">
-                        {{-- <div class="absolute -top-8 right-3 h-12 w-12 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-md">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" class="w-full h-full object-cover">
-                    </div> --}}
+                        <div class="absolute -top-8 right-3 h-12 w-12 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-md">
+                            <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100&auto=format&fit=crop" class="w-full h-full object-cover">
+                        </div>
 
                         <p class="text-[10px] font-bold text-amber-600 uppercase tracking-wider">Photography</p>
                         <h4 class="text-sm font-bold text-slate-900 mt-0.5 truncate pr-10">JB Photography</h4>
@@ -153,7 +153,7 @@
                 </div>
 
                 <!-- 🎴 Card 2 (Normal Example) -->
-                <div
+                {{-- <div
                     class="group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition duration-300 relative">
                     <div class="h-40 bg-slate-100 overflow-hidden">
                         <img src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=600&auto=format&fit=crop"
@@ -194,7 +194,7 @@
                             </a>
                         </div>
                     </div>
-                </div>
+                </div> --}}
 
                 <!-- (Foreach loop එකෙන් අනිත් Cards ටික ඔටෝ රෙන්ඩර් වෙයි මචං) -->
 
