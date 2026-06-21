@@ -106,7 +106,9 @@
 
             <!-- Results Counter & Sorting -->
             <div class="flex items-center justify-between mb-6">
-                <p class="text-xs text-slate-500">Showing <span class="text-slate-900 font-bold">12</span> verified
+                <p class="text-xs text-slate-500">Showing <span class="text-slate-900 font-bold">
+                    {{ count($providers) }}
+                    </span> verified
                     providers</p>
                 <div class="flex items-center space-x-2">
                     <button class="text-xs text-amber-600 font-bold hover:underline mr-2">Clear Filters</button>
