@@ -121,7 +121,6 @@
                 </div>
             </div>
 
-            <!-- 🛍️ Providers Grid (දැන් Sidebar එක නැති නිසා එක පේළියට ලස්සනට Cards 4ක් පේනවා - grid-cols-4) -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
 
                 @foreach ($providers as $provider)
@@ -152,7 +151,6 @@
                             @endphp
 
                             @if ($serviceCount > 1)
-                                {{-- 🏃‍♂️ සර්විස් 1කට වඩා වැඩි නම්: වමේ ඉඳන් දකුණට පාවෙන ඇනිමේෂන් එක වැඩ කරනවා --}}
                                 <div
                                     class="mt-2 overflow-hidden relative w-full ">
                                     <div
@@ -217,53 +215,6 @@
                         </div>
                     </div>
                 @endforeach
-
-                <!-- 🎴 Card 2 (Normal Example) -->
-                {{-- <div
-                    class="group bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-slate-300 transition duration-300 relative">
-                    <div class="h-40 bg-slate-100 overflow-hidden">
-                        <img src="https://images.unsplash.com/photo-1555244162-803834f70033?q=80&w=600&auto=format&fit=crop"
-                            class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                            alt="Cover Image">
-                    </div>
-                    <div class="p-4 relative">
-                        <div
-                            class="absolute -top-8 right-3 h-12 w-12 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-md">
-                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100&auto=format&fit=crop"
-                                class="w-full h-full object-cover">
-                        </div>
-                        <p class="text-[10px] font-bold text-amber-600/90 uppercase tracking-wider">Catering Services</p>
-                        <h4 class="text-sm font-bold text-slate-900 mt-0.5 truncate pr-10">Royal Taste</h4>
-                        <div class="flex items-center space-x-3 mt-2 text-[11px] text-slate-500">
-                            <span class="flex items-center">
-                                <svg class="w-3 h-3 text-slate-400 mr-0.5" fill="none" stroke="currentColor"
-                                    viewBox="0 0 24 24">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                </svg>
-                                Colombo
-                            </span>
-                            <span class="flex items-center text-amber-500 font-bold">
-                                ⭐ 4.7 <span class="text-slate-400 font-normal ml-0.5">(18)</span>
-                            </span>
-                        </div>
-                        <div class="border-t border-slate-100 my-3"></div>
-                        <div class="flex items-center justify-between">
-                            <div>
-                                <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Starting From</p>
-                                <p class="text-sm font-black text-slate-900">Rs. 1,200<span
-                                        class="text-[10px] text-slate-400 font-normal">/pp</span></p>
-                            </div>
-                            <a href="#"
-                                class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-100 text-slate-800 hover:bg-amber-500 hover:text-slate-950 transition duration-200">
-                                View Profile
-                            </a>
-                        </div>
-                    </div>
-                </div> --}}
-
-                <!-- (Foreach loop එකෙන් අනිත් Cards ටික ඔටෝ රෙන්ඩර් වෙයි මචං) -->
-
             </div>
         </div>
     </div>
