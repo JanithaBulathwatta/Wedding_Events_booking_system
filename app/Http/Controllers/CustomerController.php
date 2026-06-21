@@ -12,9 +12,9 @@ class CustomerController extends Controller
                              sp.profile_picture,
                              up.full_name as name,
                              up.mobile,
-                             p.price,
-                             st.display_name_si as service,
-                             pt.name as package_name
+                             GROUP_CONCAT(p.price) as prices,
+                             GROUP_CONCAT(DISTINCT st.display_name_si) as services,
+                             GROUP_CONCAT(pt.name) as package_names
                              from service_provider_details sp
                              inner join user_profile up on sp.user_id = up.user_id
                              inner join users u on u.id = sp.user_id and u.id = up.user_id
@@ -27,10 +27,11 @@ class CustomerController extends Controller
                              and up.record_status  = 1
                              and p.record_status  = 1
                              and st.record_status  = 1
-                             and pt.record_status  = 1";
+                             and pt.record_status  = 1
+                             GROUP BY u.id, sp.city, sp.profile_picture, up.full_name, up.mobile";
 
         $providers = DB::select($resultSQL);
-        
+
         return view('pages.customer-dashboard',compact('providers'));
     }
 }
