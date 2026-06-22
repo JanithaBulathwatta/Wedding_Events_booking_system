@@ -90,7 +90,7 @@ function getUserLiveLocation(){
 
                 L.circleMarker([userLat, userLng], {
                     radius: 10,
-                    fillColor: "#3b82f6",
+                    fillColor: "#ef4444",
                     color: "#fff",
                     weight: 2,
                     opacity: 1,

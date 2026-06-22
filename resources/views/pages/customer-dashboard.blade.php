@@ -131,7 +131,7 @@
                         </span>
 
                         <div class="h-40 bg-slate-100 overflow-hidden relative">
-                            <img src="https://images.unsplash.com/photo-1537633552985-df8429e8048b?q=80&w=600&auto=format&fit=crop"
+                            <img src="{{ $provider->cover_image ? asset('storage/' . $provider->cover_image) : asset('storage/images/photo.png') }}"
                                 class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
                                 alt="Cover Image">
                         </div>
@@ -181,9 +181,15 @@
                                     @endforeach
                                 </div>
                             @endif
-                            <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
-                                {{ $provider->name }}
-                            </h4>
+                            @if($provider->group_name == NULL)
+                                <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
+                                    {{ $provider->name }}
+                                </h4>
+                            @else
+                                <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
+                                    {{ $provider->group_name }}
+                                </h4>
+                            @endif
 
                             <div class="flex items-center space-x-3 mt-2 text-[11px] text-slate-500">
                                 <span class="flex items-center">

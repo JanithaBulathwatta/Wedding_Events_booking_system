@@ -17,32 +17,56 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
         $city = $request->txtCity;
         $profile_type = $request->profile_type;
         $groupName = $request->txtGroupName;
-        $imagePath = $request->file('fileProfilePic')->store('profile','public');
-        $coverImagePath = $request->file('fileCoverPic')->store('cover','public');
+
+        $imagePath = null;
+        if ($request->hasFile('fileProfilePic') && $request->file('fileProfilePic')->isValid()) {
+            $imagePath = $request->file('fileProfilePic')->store('profile', 'public');
+        }
+
+        $coverImagePath = null;
+        if ($request->hasFile('fileCoverPic') && $request->file('fileCoverPic')->isValid()) {
+            $coverImagePath = $request->file('fileCoverPic')->store('cover', 'public');
+        }
+
         $userId = Auth::id();
         $districtName = DB::table('districts')->where('id',$district)->value('name');
 
-        $providerLocation = "{$city},{$districtName},Sri Lanka";
+        $latitude = null;
+        $longitude = null;
+
+        $providerLocation = "{$city}, Sri Lanka";
 
         $response = Http::withHeaders([
             'User-Agent' => 'Ashtaka/1.0 (janithabulathwatta04@gmail.com)'
-        ])
-        ->timeout(15)
-        ->withoutVerifying()
-        ->get('https://nominatim.openstreetmap.org/search', [
+        ])->timeout(30)->withoutVerifying()->get('https://nominatim.openstreetmap.org/search', [
             'q' => $providerLocation,
             'format' => 'json',
             'limit' => 1
         ]);
-        //dd($response);
-        $latitude = null;
-        $longitude = null;
 
         if ($response->successful() && isset($response->json()[0])) {
+
             $latitude = $response->json()[0]['lat'];
             $longitude = $response->json()[0]['lon'];
+
+        } else {
+
+            $districtLocation = "{$districtName}, Sri Lanka";
+
+            $districtResponse = Http::withHeaders([
+                'User-Agent' => 'Ashtaka/1.0 (janithabulathwatta04@gmail.com)'
+            ])->timeout(30)->withoutVerifying()->get('https://nominatim.openstreetmap.org/search', [
+                'q' => $districtLocation,
+                'format' => 'json',
+                'limit' => 1
+            ]);
+            if ($districtResponse->successful() && isset($districtResponse->json()[0])) {
+
+                $latitude = $districtResponse->json()[0]['lat'];
+                $longitude = $districtResponse->json()[0]['lon'];
+            }
         }
-        
+
         $user = DB::table('users')
                     ->where('id',$userId)
                     ->first();

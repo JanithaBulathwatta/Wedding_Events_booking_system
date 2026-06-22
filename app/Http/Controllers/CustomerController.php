@@ -10,6 +10,8 @@ class CustomerController extends Controller
     public function loadCustomerDashboard(){
         $resultSQL = "select sp.city,
                              sp.profile_picture,
+                             sp.cover_image,
+                             sp.group_name,
                              up.full_name as name,
                              up.mobile,
                              GROUP_CONCAT(p.price) as prices,
@@ -28,7 +30,7 @@ class CustomerController extends Controller
                              and p.record_status  = 1
                              and st.record_status  = 1
                              and pt.record_status  = 1
-                             GROUP BY u.id, sp.city, sp.profile_picture, up.full_name, up.mobile";
+                             GROUP BY u.id, sp.city, sp.profile_picture, up.full_name, up.mobile,sp.cover_image,sp.group_name";
 
         $providers = DB::select($resultSQL);
 
