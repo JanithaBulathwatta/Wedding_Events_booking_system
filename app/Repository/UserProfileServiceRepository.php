@@ -42,9 +42,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
             $latitude = $response->json()[0]['lat'];
             $longitude = $response->json()[0]['lon'];
         }
-        //dd($longitude);
-
-
+        
         $user = DB::table('users')
                     ->where('id',$userId)
                     ->first();
@@ -67,6 +65,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
                     "longitude" => $longitude,
                     "profile_type" => $profile_type,
                     "group_name" => $groupName,
+                    "cover_image" => $coverImagePath,
                     "profile_picture" => $imagePath,
                     "district_id" => $district,
                     "created_at" => Carbon::now(),
