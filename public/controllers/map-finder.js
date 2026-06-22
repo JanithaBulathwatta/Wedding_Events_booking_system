@@ -88,14 +88,20 @@ function getUserLiveLocation(){
             if (map) {
                 map.setView([userLat, userLng], 14);
 
-                L.circleMarker([userLat, userLng], {
-                    radius: 10,
-                    fillColor: "#ef4444",
-                    color: "#fff",
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.8
-                }).addTo(map).bindPopup("<b>You are here</b>").openPopup();
+                var redIcon = L.icon({
+                    iconUrl: 'https://raw.githubusercontent.com/pointhi/leaflet-color-markers/master/img/marker-icon-2x-red.png',
+                    shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.7/images/marker-shadow.png',
+                    iconSize: [25, 41],
+                    iconAnchor: [12, 41],
+                    popupAnchor: [1, -34],
+                    shadowSize: [41, 41]
+                });
+
+                L.marker([userLat, userLng], {icon: redIcon})
+                .addTo(map)
+                .bindPopup("<b>You are here</b>")
+                .openPopup();
+
             }
 
         }, function() {
@@ -105,12 +111,12 @@ function getUserLiveLocation(){
 }
 
 function searchLocationViaOSM(query) {
-    // ලංකාව ඇතුළේ විතරක් සර්ච් වෙන්න "Sri Lanka" කෑල්ල අගට එකතු කරනවා
+
     var fullQuery = query + ", Sri Lanka";
 
     $.ajax({
         type: "GET",
-        url: "https://nominatim.openstreetmap.org/search", // කෙළින්ම OSM API එකට යනවා
+        url: "https://nominatim.openstreetmap.org/search",
         data: {
             q: fullQuery,
             format: "json",
@@ -121,18 +127,16 @@ function searchLocationViaOSM(query) {
             if (response && response.length > 0) {
                 var lat = parseFloat(response[0].lat);
                 var lng = parseFloat(response[0].lon);
-                var displayName = response[0].display_name.split(',')[0]; // මුල්ම නම විතරක් ගන්නවා (උදා: Kandy)
+                var displayName = response[0].display_name.split(',')[0];
 
                 if (map) {
-                    // ⏱️ 3. මැප් එක සර්ච් කරපු තැනට Smoothව අරන් යනවා
+
                     map.setView([lat, lng], 14, { animate: true, duration: 1.5 });
 
-                    // 🧹 4. කලින් තිබ්බ නිල් බෝලය මැප් එකෙන් අයින් කරනවා (නැත්නම් බෝල ගොඩක් ඉතුරු වෙයි)
                     if (userMarker) {
                         map.removeLayer(userMarker);
                     }
 
-                    // 🔵 5. අලුත් තැන උඩ නිල් පාට බෝලය (Circle Marker) හිටවනවා
                     userMarker = L.circleMarker([lat, lng], {
                         radius: 10,
                         fillColor: "#3b82f6",

@@ -2,80 +2,58 @@
 
 @section('customCSS')
     <style>
+        /* 📍 Leaflet Popup එක Apple Style එකට Soft blur එකක් සහ shadow එකක් දීම */
         .leaflet-popup-content-wrapper {
-            border-radius: 12px !important;
-            padding: 4px !important;
-            box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1) !important;
+            border-radius: 20px !important;
+            padding: 8px !important;
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(12px) !important;
+            box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.08) !important;
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+        .leaflet-popup-tip {
+            background: rgba(255, 255, 255, 0.9) !important;
+            backdrop-filter: blur(12px) !important;
         }
     </style>
 @endsection
 
 @section('content')
-<div class="bg-slate-50 font-sans h-[calc(100vh-64px)] overflow-hidden flex flex-col">
+<div class="font-sans h-[calc(100vh-64px)] w-full relative overflow-hidden flex flex-col bg-slate-900">
 
-    <div class="flex flex-1 flex-col md:flex-row overflow-hidden relative">
+    <div id="map" class="absolute inset-0 w-full h-full z-0"></div>
 
-        <div class="w-full md:w-[380px] bg-white border-r border-slate-200 flex flex-col h-full z-10 shadow-lg">
+    <div class="absolute bottom-6 inset-x-0 w-full px-4 z-[999] pointer-events-none flex justify-center">
 
-            <div class="p-4 border-b border-slate-100 bg-white">
-                <h1 class="text-lg font-black text-slate-900 mb-1">Find Nearby Services</h1>
-                <p class="text-xs text-slate-500 mb-3">ඔබට ආසන්නයේම සිටින සේවා සපයන්නන් සොයන්න.</p>
+        <div class="w-full max-w-xl bg-slate-900/90 backdrop-blur-xl rounded-3xl p-4 shadow-[0_25px_50px_-12px_rgba(0,0,0,0.5)] border border-slate-700/40 pointer-events-auto flex flex-col sm:flex-row items-center gap-4 transition-all duration-300 hover:border-amber-500/30">
 
-                <div class="space-y-3">
-                    <div class="relative">
-                        <input type="text" id="txtLocation" placeholder="Enter your location (e.g. Kandy)..."
-                               class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
-                    </div>
-
-                    <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:outline-none">
-                        <option value="">All Categories</option>
-                        <option value="photography">Photography</option>
-                        <option value="catering">Catering</option>
-                        <option value="decorating">Decorating</option>
-                    </select>
+            <div class="flex items-center gap-3 w-full sm:w-auto shrink-0 border-b sm:border-b-0 sm:border-r border-slate-700/50 pb-3 sm:pb-0 sm:pr-4">
+                <div class="w-9 h-9 rounded-2xl bg-gradient-to-tr from-amber-500 to-orange-400 flex items-center justify-center shadow-md shadow-orange-500/20">
+                    <svg class="w-5 h-5 text-white animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                    </svg>
+                </div>
+                <div>
+                    <h1 class="text-xs font-black tracking-wider uppercase text-slate-200">Live Radar</h1>
+                    <p class="text-[10px] text-slate-400 font-medium">Find services around you</p>
                 </div>
             </div>
 
-            <div class="flex-1 overflow-y-auto p-4 space-y-4 bg-slate-50/50" id="provider-list">
-
-                <div class="provider-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm hover:border-amber-500 cursor-pointer transition duration-200"
-                     data-lat="7.2906" data-lng="80.6337" data-id="1">
-                    <div class="flex items-start space-x-3">
-                        <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=100" class="w-12 h-12 rounded-full object-cover border border-slate-100">
-                        <div class="flex-1 min-w-0">
-                            <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full uppercase">Photography</span>
-                            <h3 class="text-sm font-bold text-slate-900 mt-1 truncate">JB Photography</h3>
-                            <p class="text-xs text-slate-500 flex items-center mt-0.5">📍 Kandy Town (0.5 km away)</p>
-                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
-                                <span class="text-xs font-black text-slate-900">Rs. 65,000 up</span>
-                                <span class="text-xs text-amber-500 font-bold">⭐ 4.9</span>
-                            </div>
-                        </div>
-                    </div>
+            <div class="w-full relative">
+                <div class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
+                    <span class="flex h-2 w-2 relative mr-1">
+                        <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-amber-400 opacity-75"></span>
+                        <span class="relative inline-flex rounded-full h-2 w-2 bg-amber-500"></span>
+                    </span>
                 </div>
 
-                <div class="provider-card bg-white border border-slate-200 rounded-xl p-3 shadow-sm hover:border-amber-500 cursor-pointer transition duration-200"
-                     data-lat="7.2950" data-lng="80.6400" data-id="2">
-                    <div class="flex items-start space-x-3">
-                        <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=100" class="w-12 h-12 rounded-full object-cover border border-slate-100">
-                        <div class="flex-1 min-w-0">
-                            <span class="text-[9px] font-bold text-amber-600 bg-amber-50 px-2 py-0.5 rounded-full uppercase">Catering</span>
-                            <h3 class="text-sm font-bold text-slate-900 mt-1 truncate">Royal Taste Catering</h3>
-                            <p class="text-xs text-slate-500 flex items-center mt-0.5">📍 Peradeniya (2.1 km away)</p>
-                            <div class="flex items-center justify-between mt-2 pt-2 border-t border-slate-100">
-                                <span class="text-xs font-black text-slate-900">Rs. 1,200/pp</span>
-                                <span class="text-xs text-amber-500 font-bold">⭐ 4.7</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                <input type="text" id="txtLocation" placeholder="Type a location (e.g. Kalutara)..."
+                       class="w-full bg-slate-800/60 border border-slate-700/30 rounded-2xl pl-9 pr-4 py-3 text-xs text-slate-200 font-semibold placeholder-slate-500 focus:border-amber-500 focus:bg-slate-900 focus:ring-4 focus:ring-amber-500/10 focus:outline-none transition duration-300 shadow-inner">
             </div>
+
         </div>
-
-        <div id="map" class="flex-1 h-full z-0"></div>
-
     </div>
+
 </div>
 @endsection
 
