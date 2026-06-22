@@ -154,7 +154,8 @@
                                                     to upload</span></p>
                                         </div>
                                         <input id="fileProfilePic" name="fileProfilePic" type="file" accept="image/*"
-                                            class="hidden" required />
+                                            class="hidden image-uploader" data-target-preview="#file-name-preview"
+                                            data-target-img="#img-preview" data-target-text="#file-name-text" />
                                     </label>
                                 </div>
 
@@ -169,8 +170,48 @@
                                             <p id="file-name-text" class="text-xs font-bold text-slate-900 truncate"></p>
                                         </div>
                                     </div>
-                                    <button type="button" id="btn-remove-image"
-                                        class="text-red-500 hover:text-red-700 font-bold text-sm p-1.5 hover:bg-red-50 rounded-lg transition duration-200">
+                                    <button type="button"
+                                        class="btn-remove-preview text-red-500 hover:text-red-700 font-bold text-sm p-1.5 hover:bg-red-50 rounded-lg transition duration-200"
+                                        data-input="#fileProfilePic" data-preview="#file-name-preview"
+                                        data-img="#img-preview" data-text="#file-name-text">
+                                        ✕
+                                    </button>
+                                </div>
+                            </div>
+                            <div>
+                                <label for="fileCoverPic" class="block text-sm font-bold text-slate-900 mb-1">Cover
+                                    Picture</label>
+                                <div class="flex items-center justify-center w-full">
+                                    <label for="fileCoverPic"
+                                        class="flex flex-col items-center justify-center w-full h-24 border-2 border-slate-300 border-dashed rounded-xl cursor-pointer bg-slate-50/90 hover:bg-slate-100 transition">
+                                        <div class="flex flex-col items-center justify-center pt-2 pb-2 text-center px-2">
+                                            <svg class="w-6 h-6 mb-1 text-slate-500" aria-hidden="true"
+                                                xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                                                <path stroke="currentColor" stroke-linecap="round"
+                                                    stroke-linejoin="round" stroke-width="2"
+                                                    d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                                            </svg>
+                                            <p class="text-xs text-slate-600"><span class="font-bold text-amber-700">Click
+                                                    to upload Cover</span></p>
+                                        </div>
+                                        <input id="fileCoverPic" name="fileCoverPic" type="file" accept="image/*" class="hidden image-uploader"
+                                            data-target-preview="#cover-name-preview" data-target-img="#cover-img-preview" data-target-text="#cover-name-text" />
+                                    </label>
+                                </div>
+
+                                <div id="cover-name-preview"
+                                    class="items-center justify-between gap-3 mt-2 hidden w-full border border-slate-200 rounded-xl p-2 bg-white shadow-sm">
+                                    <div class="flex items-center gap-2">
+                                        <img id="cover-img-preview" src=""
+                                            class="w-10 h-10 rounded-lg object-cover border border-slate-200"
+                                            alt="Cover Preview">
+                                        <div class="max-w-[150px]">
+                                            <p class="text-[10px] font-medium text-slate-500">Selected Cover:</p>
+                                            <p id="cover-name-text" class="text-xs font-bold text-slate-900 truncate"></p>
+                                        </div>
+                                    </div>
+                                    <button type="button" class="btn-remove-preview text-red-500 hover:text-red-700 font-bold text-sm p-1.5 hover:bg-red-50 rounded-lg transition duration-200"
+                                            data-input="#fileCoverPic" data-preview="#cover-name-preview" data-img="#cover-img-preview" data-text="#cover-name-text">
                                         ✕
                                     </button>
                                 </div>

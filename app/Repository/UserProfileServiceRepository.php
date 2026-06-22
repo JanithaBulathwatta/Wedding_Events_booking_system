@@ -18,6 +18,7 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
         $profile_type = $request->profile_type;
         $groupName = $request->txtGroupName;
         $imagePath = $request->file('fileProfilePic')->store('profile','public');
+        $coverImagePath = $request->file('fileCoverPic')->store('cover','public');
         $userId = Auth::id();
         $districtName = DB::table('districts')->where('id',$district)->value('name');
 

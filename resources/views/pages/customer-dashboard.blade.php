@@ -101,10 +101,8 @@
             </div>
         </div>
 
-        <!-- 📦 3. Main Results Section -->
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
-            <!-- Results Counter & Sorting -->
             <div class="flex items-center justify-between mb-6">
                 <p class="text-xs text-slate-500">Showing <span class="text-slate-900 font-bold">
                     {{ count($providers) }}
@@ -141,7 +139,7 @@
                         <div class="p-4 relative">
                             <div
                                 class="absolute -top-8 right-3 h-12 w-12 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-md">
-                                <img src="{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('images/default-avatar.png') }}"
+                                <img src="{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('storage/images/user.png') }}"
                                     class="w-full h-full object-cover" alt="{{ $provider->name }}'s Profile Picture">
                             </div>
 

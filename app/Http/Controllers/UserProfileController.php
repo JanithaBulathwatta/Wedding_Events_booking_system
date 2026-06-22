@@ -22,7 +22,7 @@ class UserProfileController extends Controller
     }
 
     public function setUserProfile(Request $request){
-
+        dd($request->all());
         $response = UserProfileService::setUserProfile($request);
         return response()->json($response);
     }

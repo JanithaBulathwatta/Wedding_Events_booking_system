@@ -77,6 +77,7 @@ function events(){
         let profileType = $("input[name='profile_type']:checked").val();
         let groupName = $('#txtGroupName').val();
         let profileImage = $('#fileProfilePic')[0].files[0];
+        let coverImage = $('#fileCoverPic')[0].files[0];
 
         let formData = new FormData();
 
@@ -89,6 +90,9 @@ function events(){
         formData.append('txtGroupName', groupName ? groupName : '');
         if (profileImage) {
             formData.append('fileProfilePic', profileImage);
+        }
+        if(coverImage){
+            formData.append('fileCoverPic', coverImage);
         }
 
         if($('#frmProfileSetup').valid()){
@@ -109,26 +113,44 @@ function events(){
         }
     });
 
-    $('#fileProfilePic').on('change', function() {
+    $('.image-uploader').on('change', function() {
         let file = this.files[0];
 
+        // HTML එකේ ලියාපු IDs ටික මෙතනින් dynamic ව අල්ලගන්නවා
+        let previewDiv = $(this).data('target-preview');
+        let imgTag = $(this).data('target-img');
+        let textTag = $(this).data('target-text');
+
         if (file) {
-            $('#file-name-text').text(file.name);
+            $(textTag).text(file.name);
             let reader = new FileReader();
             reader.onload = function(e) {
-                $('#img-preview').attr('src', e.target.result);
+                $(imgTag).attr('src', e.target.result);
             }
             reader.readAsDataURL(file);
 
-            $('#file-name-preview').removeClass('hidden');
+            // අදාළ Preview එක විතරක් පෙන්වනවා
+            $(previewDiv).removeClass('hidden').addClass('flex');
         } else {
-            $('#file-name-preview').addClass('hidden');
+            $(previewDiv).addClass('hidden').removeClass('flex');
         }
     });
 
-    $('#btn-remove-image').on('click', function(e) {
+    // ✕ 2. අයින් කරන බටන් එක ඔබද්දී (Profile හෝ Cover දෙකටම පොදුයි)
+    $('.btn-remove-preview').on('click', function(e) {
         e.preventDefault();
-        resetImagePreview();
+
+        // බටන් එකේ තියෙන data attributes වලින් අදාළ IDs ටික ගන්නවා
+        let inputId = $(this).data('input');
+        let previewDiv = $(this).data('preview');
+        let imgTag = $(this).data('img');
+        let textTag = $(this).data('text');
+
+        // ඒ අදාළ ඒවා විතරක් reset කරනවා මචං
+        $(inputId).val('');
+        $(imgTag).attr('src', '');
+        $(textTag).text('');
+        $(previewDiv).addClass('hidden').removeClass('flex');
     });
 }
 
