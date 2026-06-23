@@ -147,6 +147,9 @@
 
                             @php
                                 $serviceList = explode(',', $provider->services);
+                                $prices = explode(',',$provider->prices);
+                                $descriptions = explode(',',$provider->descriptions);
+                                $packageTypes = explode(',',$provider->package_names);
                                 $serviceCount = count($serviceList);
                             @endphp
 
@@ -216,7 +219,11 @@
                                     class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950 transition duration-200 no-underline btnViewProfile"
                                     data-name = "{{ $provider->name }}" data-groupname = "{{ $provider->group_name }}" data-mobile = "{{ $provider->mobile }}"
                                     data-profilepic = "{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('storage/images/user.png') }}"
-                                    data-coverimage = "{{ asset('storage/' . $provider->cover_image) }}"
+                                    data-coverimage = "{{ $provider->cover_image ? asset('storage/' . $provider->cover_image) : asset('storage/images/photo.png') }}"
+                                    data-services="{{ json_encode($serviceList) }}"
+                                    data-descriptions = "{{ json_encode($descriptions) }}"
+                                    data-prices = "{{ json_encode($prices) }}"
+                                    data-packageTypes = "{{ json_encode($packageTypes) }}"
                                     >
                                     View Profile
                             </button>
@@ -245,16 +252,15 @@
             </div>
 
             <div class="relative h-44 bg-slate-100 shrink-0">
-                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1200"
-                    class="w-full h-full object-cover" id="providerCover">
+                <img src=""
+                    class="w-full h-full object-cover" id="imgCoverImage">
 
                 <div class="absolute -bottom-10 left-8 flex items-end gap-4 z-10">
                     <img src=""
                         class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg" id="imgProfileImage">
                     <div class="mb-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 shadow-sm">
                         <h2 class="text-base font-black text-slate-800" id="txtProviderName"></h2>
-                        <p class="text-[11px] text-amber-600 font-bold flex items-center gap-1">⭐ 4.9 <span
-                                class="text-slate-400 font-normal">(42 Reviews)</span></p>
+                        <p class="text-[11px] text-amber-600 font-bold flex items-center gap-1" id="txtMobile"></p>
                     </div>
                 </div>
 
@@ -287,25 +293,7 @@
                         </div>
 
                         <div class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1" id="servicesList">
-                            <div class="service-card border border-slate-200 rounded-xl p-3 cursor-pointer transition hover:border-amber-500/50 flex justify-between items-center bg-slate-50/50"
-                                data-price="65,000"
-                                data-desc="සම්පූර්ණ විවාහ උත්සවයම ආවරණය වන පරිදි, Premium ඡායාරූප සහ Unlimited ඩිජිටල් කොපි ඇතුළත් වේ.">
-                                <div>
-                                    <h4 class="text-xs font-bold text-slate-800">Wedding Photography</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">Full Day Coverage</p>
-                                </div>
-                                <span class="text-xs font-black text-slate-700">Rs. 65,000</span>
-                            </div>
 
-                            <div class="service-card border border-slate-200 rounded-xl p-3 cursor-pointer transition hover:border-amber-500/50 flex justify-between items-center bg-slate-50/50"
-                                data-price="35,000"
-                                data-desc="Pre-wedding Shoot එකක් සහ ලස්සන Mini-album එකක් ඇතුළත් වේ. පැය 5ක කාලයක් වෙන් කෙරේ.">
-                                <div>
-                                    <h4 class="text-xs font-bold text-slate-800">Pre-Wedding Shoot</h4>
-                                    <p class="text-[10px] text-slate-400 mt-0.5">Outdoor Location</p>
-                                </div>
-                                <span class="text-xs font-black text-slate-700">Rs. 35,000</span>
-                            </div>
                         </div>
 
                         <div id="serviceDetailsBox"

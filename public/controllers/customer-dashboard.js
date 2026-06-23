@@ -13,9 +13,63 @@ function events(){
         $('#bookingModal').removeClass('hidden').addClass('flex');
         let name = $(this).data('name');
         let profilePic = $(this).data('profilepic');
+        let coverPic = $(this).data('coverimage');
+        let mobile = $(this).data('mobile');
+        let services = $(this).data('services');
+        let descriptions = $(this).data('descriptions');
+        let prices = $(this).data('prices');
+        let packageTypes = $(this).data('packagetypes');
+        console.log(descriptions);
+
+
 
         $('#txtProviderName').text(name);
         $('#imgProfileImage').attr('src',profilePic);
+        $('#imgCoverImage').attr('src',coverPic);
+        $('#txtMobile').text(mobile);
+
+
+        $('#servicesList').empty();
+        services.forEach(function(service, index) {
+            let serviceName = service ? service.trim() : '';
+
+            let servicePrice = (prices && prices[index]) ? prices[index].trim() : 'Contact';
+            let serviceDesc = (descriptions && descriptions[index]) ? descriptions[index].trim() : 'No description available.';
+            // 🎯 Index එක අනුව අදාළ පැකේජ් ටයිප් එක ගන්නවා
+            let packageType = (packageTypes && packageTypes[index]) ? packageTypes[index].trim() : 'Standard';
+
+            if (serviceName !== '') {
+                let serviceCardHtml = `
+                    <div class="service-card border border-slate-200 rounded-2xl p-3 cursor-pointer transition hover:border-red-500/50 flex justify-between items-center bg-slate-50/50 gap-3 select-none"
+                        data-price="${servicePrice}"
+                        data-desc="${serviceDesc}">
+
+                        <div class="flex items-center gap-3 w-full">
+                            <div class="relative flex items-center justify-center shrink-0">
+                                <input type="checkbox" class="chk-service accent-red-500 w-4 h-4 rounded border-slate-300 text-red-500 focus:ring-red-500/30 cursor-pointer">
+                            </div>
+
+                            <div class="flex-1 min-w-0">
+                                <div class="flex items-center gap-2 flex-wrap">
+                                    <h4 class="text-xs font-bold text-slate-800 truncate">${serviceName}</h4>
+
+                                    <span class="inline-flex items-center px-2 py-0.5 rounded-full text-[9px] font-medium bg-red-50 text-red-600 border border-red-100/80">
+                                        ${packageType}
+                                    </span>
+                                </div>
+
+                                <p class="text-[10px] text-slate-500 mt-1 italic line-clamp-2">${serviceDesc}</p>
+                            </div>
+                        </div>
+
+                        <span class="text-xs font-black text-slate-700 shrink-0 ml-2">Rs. ${servicePrice}</span>
+                    </div>
+                `;
+
+                $('#servicesList').append(serviceCardHtml);
+            }
+        });
+
 
         initModalCalendar();
     });

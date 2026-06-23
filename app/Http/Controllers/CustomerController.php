@@ -15,6 +15,7 @@ class CustomerController extends Controller
                              up.full_name as name,
                              up.mobile,
                              GROUP_CONCAT(p.price) as prices,
+                             GROUP_CONCAT(p.description) as descriptions,
                              GROUP_CONCAT(DISTINCT st.display_name_si) as services,
                              GROUP_CONCAT(pt.name) as package_names
                              from service_provider_details sp
