@@ -2,7 +2,6 @@
 
 @section('customCSS')
     <style>
-        /* 📍 Leaflet Popup එක Apple Style එකට Soft blur එකක් සහ shadow එකක් දීම */
         .leaflet-popup-content-wrapper {
             border-radius: 20px !important;
             padding: 8px !important;

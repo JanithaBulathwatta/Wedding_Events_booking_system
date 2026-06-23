@@ -21,7 +21,9 @@
         .animate-marquee:hover {
             animation-play-state: paused;
         }
+        
     </style>
+
 @endsection
 
 @section('content')
@@ -105,7 +107,7 @@
 
             <div class="flex items-center justify-between mb-6">
                 <p class="text-xs text-slate-500">Showing <span class="text-slate-900 font-bold">
-                    {{ count($providers) }}
+                        {{ count($providers) }}
                     </span> verified
                     providers</p>
                 <div class="flex items-center space-x-2">
@@ -149,8 +151,7 @@
                             @endphp
 
                             @if ($serviceCount > 1)
-                                <div
-                                    class="mt-2 overflow-hidden relative w-full ">
+                                <div class="mt-2 overflow-hidden relative w-full ">
                                     <div
                                         class="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none">
                                     </div>
@@ -181,7 +182,7 @@
                                     @endforeach
                                 </div>
                             @endif
-                            @if($provider->group_name == NULL)
+                            @if ($provider->group_name == null)
                                 <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
                                     {{ $provider->name }}
                                 </h4>
@@ -211,7 +212,7 @@
                                     <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Contact</p>
                                     <p class="text-sm font-black text-slate-900">{{ $provider->mobile }}</p>
                                 </div>
-                                <a href=""
+                                <a id="btnViewProfile"
                                     class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950 transition duration-200 no-underline">
                                     View Profile
                                 </a>
@@ -220,6 +221,122 @@
                     </div>
                 @endforeach
             </div>
+        </div>
+    </div>
+
+    {{-- modal --}}
+    <div id="bookingModal"
+        class="fixed inset-0 z-[1000] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+
+        <div
+            class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+
+            <div class="absolute top-4 right-4 z-50">
+                <button type="button" id="btnCloseModal"
+                    class="w-8 h-8 rounded-full bg-white/80 backdrop-blur-md text-slate-700 hover:bg-slate-100 flex items-center justify-center shadow-md transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+            </div>
+
+            <div class="relative h-44 bg-slate-100 shrink-0">
+                <img src="https://images.unsplash.com/photo-1542038784456-1ea8e935640e?q=80&w=1200"
+                    class="w-full h-full object-cover" id="providerCover">
+
+                <div class="absolute -bottom-10 left-8 flex items-end gap-4 z-10">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150"
+                        class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-lg" id="providerAvatar">
+                    <div class="mb-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 shadow-sm">
+                        <h2 class="text-base font-black text-slate-800" id="providerName">JB Photography</h2>
+                        <p class="text-[11px] text-amber-600 font-bold flex items-center gap-1">⭐ 4.9 <span
+                                class="text-slate-400 font-normal">(42 Reviews)</span></p>
+                    </div>
+                </div>
+
+                <div class="absolute inset-x-0 bottom-0 h-1/2 bg-gradient-to-t from-slate-900/40 to-transparent"></div>
+            </div>
+
+            <div class="flex-1 overflow-y-auto flex flex-col md:flex-row bg-slate-50/50 pt-12">
+
+                <div class="flex-1 p-6 border-b md:border-b-0 md:border-r border-slate-100">
+                    <div class="bg-white rounded-2xl p-4 border border-slate-200/60 shadow-sm">
+                        <div class="flex items-center gap-2 mb-3">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Select an Available Date
+                            </h3>
+                        </div>
+
+                        <div id="providerCalendar" class="text-xs"></div>
+                    </div>
+                </div>
+
+                <div class="w-full md:w-[380px] p-6 flex flex-col justify-between gap-6 shrink-0 bg-white">
+
+                    <div class="space-y-4">
+                        <div class="flex items-center gap-2">
+                            <span class="w-2 h-2 rounded-full bg-amber-500"></span>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Select Service</h3>
+                        </div>
+
+                        <div class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1" id="servicesList">
+                            <div class="service-card border border-slate-200 rounded-xl p-3 cursor-pointer transition hover:border-amber-500/50 flex justify-between items-center bg-slate-50/50"
+                                data-price="65,000"
+                                data-desc="සම්පූර්ණ විවාහ උත්සවයම ආවරණය වන පරිදි, Premium ඡායාරූප සහ Unlimited ඩිජිටල් කොපි ඇතුළත් වේ.">
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-800">Wedding Photography</h4>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Full Day Coverage</p>
+                                </div>
+                                <span class="text-xs font-black text-slate-700">Rs. 65,000</span>
+                            </div>
+
+                            <div class="service-card border border-slate-200 rounded-xl p-3 cursor-pointer transition hover:border-amber-500/50 flex justify-between items-center bg-slate-50/50"
+                                data-price="35,000"
+                                data-desc="Pre-wedding Shoot එකක් සහ ලස්සන Mini-album එකක් ඇතුළත් වේ. පැය 5ක කාලයක් වෙන් කෙරේ.">
+                                <div>
+                                    <h4 class="text-xs font-bold text-slate-800">Pre-Wedding Shoot</h4>
+                                    <p class="text-[10px] text-slate-400 mt-0.5">Outdoor Location</p>
+                                </div>
+                                <span class="text-xs font-black text-slate-700">Rs. 35,000</span>
+                            </div>
+                        </div>
+
+                        <div id="serviceDetailsBox"
+                            class="hidden bg-slate-50 border border-slate-100 rounded-2xl p-4 animate-in fade-in duration-300">
+                            <h4 class="text-xs font-bold text-slate-800" id="selectedServiceName">Service Name</h4>
+                            <p class="text-[11px] text-slate-400 mt-1 leading-relaxed" id="selectedServiceDesc">
+                                Description text...</p>
+                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-200/60">
+                                <span class="text-[11px] text-slate-500 font-medium">Price:</span>
+                                <span class="text-sm font-black text-amber-600" id="selectedServicePrice">Rs. 0</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 border-t border-slate-100 space-y-4">
+                        <div class="flex justify-between items-center text-xs">
+                            <span class="text-slate-400 font-medium">Selected Date:</span>
+                            <span id="txtSelectedDateDisplay"
+                                class="font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">None</span>
+                        </div>
+
+                        <form id="frmConfirmBooking" action="/bookings/store" method="POST">
+                            @csrf
+                            <input type="hidden" name="provider_id" id="hidProviderId" value="1">
+                            <input type="hidden" name="service_name" id="hidServiceName">
+                            <input type="hidden" name="booking_date" id="hidBookingDate">
+
+                            <button type="submit" id="btnSubmitBooking" disabled
+                                class="w-full bg-slate-200 text-slate-400 font-bold text-xs py-3 rounded-xl transition duration-200 cursor-not-allowed uppercase tracking-wider shadow-md">
+                                Confirm Booking
+                            </button>
+                        </form>
+                    </div>
+
+                </div>
+
+            </div>
+
         </div>
     </div>
 @endsection
