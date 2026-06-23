@@ -19,9 +19,6 @@ function events(){
         let descriptions = $(this).data('descriptions');
         let prices = $(this).data('prices');
         let packageTypes = $(this).data('packagetypes');
-        console.log(descriptions);
-
-
 
         $('#txtProviderName').text(name);
         $('#imgProfileImage').attr('src',profilePic);
@@ -35,7 +32,7 @@ function events(){
 
             let servicePrice = (prices && prices[index]) ? prices[index].trim() : 'Contact';
             let serviceDesc = (descriptions && descriptions[index]) ? descriptions[index].trim() : 'No description available.';
-            // 🎯 Index එක අනුව අදාළ පැකේජ් ටයිප් එක ගන්නවා
+
             let packageType = (packageTypes && packageTypes[index]) ? packageTypes[index].trim() : 'Standard';
 
             if (serviceName !== '') {
@@ -70,7 +67,7 @@ function events(){
             }
         });
 
-
+        rebindServiceEvents();
         initModalCalendar();
     });
 
@@ -78,37 +75,33 @@ function events(){
         $('#bookingModal').removeClass('flex').addClass('hidden');
     });
 
-    $('.service-card').on('click', function() {
-        // කලින් සිලෙක්ට් වෙලා තිබ්බ එක අයින් කරලා අලුත් එකට Active ක්ලාස් දානවා
-        $('.service-card').removeClass('border-amber-500 bg-amber-50/30 ring-2 ring-amber-500/10');
-        $(this).addClass('border-amber-500 bg-amber-50/30 ring-2 ring-amber-500/10');
-
-        selectedService = $(this).find('h4').text();
-        let price = $(this).data('price');
-        let desc = $(this).data('desc');
-
-        // 📝 දකුණු පැත්තේ තියෙන Dynamic Details Box එක අප්ඩේට් කරලා පෙන්වනවා
-        $('#selectedServiceName').text(selectedService);
-        $('#selectedServiceDesc').text(desc);
-        $('#selectedServicePrice').text('Rs. ' + price);
-        $('#serviceDetailsBox').removeClass('hidden');
-
-        // Form hidden input එකට දානවා
-        $('#hidServiceName').val(selectedService);
-
-        checkFormValidity(); // බටන් එක ඇක්ටිව් කරන්න පුළුවන්ද බලනවා
-    });
-
 }
 
 function checkFormValidity() {
-        if (selectedDate && selectedService) {
-            $('#btnSubmitBooking')
-                .removeAttr('disabled')
-                .removeClass('bg-slate-200 text-slate-400 cursor-not-allowed')
-                .addClass('bg-amber-500 hover:bg-amber-600 text-slate-950 font-black cursor-pointer');
-        }
+    // 🔍 දැනට සිලෙක්ට් වෙලා තියෙන චෙක්බොක්ස් ගණන ගන්නවා
+    let checkedServicesCount = $('.chk-service:checked').length;
+
+    // 💡 දිනයක් සිලෙක්ට් වෙලා තියෙන්න ඕනේ + අඩුම ගානේ එක සර්විස් එකක් හරි සිලෙක්ට් වෙලා තියෙන්න ඕනේ
+    if (selectedDate && checkedServicesCount > 0) {
+
+        // 🚀 Global variable එකට සිලෙක්ට් කරපු සර්විස් එක True (හෝ අගයක්) විදිහට මාර්ක් කරනවා වැලිඩේෂන් එක පාස් වෙන්න
+        selectedService = true;
+
+        $('#btnSubmitBooking')
+            .removeAttr('disabled')
+            .removeClass('bg-slate-200 text-slate-400 cursor-not-allowed')
+            .addClass('bg-amber-500 hover:bg-amber-600 text-slate-950 font-black cursor-pointer');
     }
+    // 🚫 දිනය නැත්නම් හෝ එකම සර්විස් එකක්වත් සිලෙක්ට් කරලා නැත්නම් බටන් එක ලොක් කරනවා
+    else {
+        selectedService = null;
+
+        $('#btnSubmitBooking')
+            .attr('disabled', 'disabled')
+            .removeClass('bg-amber-500 hover:bg-amber-600 text-slate-950 font-black cursor-pointer')
+            .addClass('bg-slate-200 text-slate-400 cursor-not-allowed');
+    }
+}
 
 function initModalCalendar() {
         var calendarEl = document.getElementById('providerCalendar');
@@ -120,15 +113,16 @@ function initModalCalendar() {
             initialView: 'dayGridMonth',
             height: 380, // මොඩල් එකට ගැලපෙන උස
             selectable: true,
+            unselectAuto: false,
             headerToolbar: {
                 left: 'title',
                 center: '',
                 right: 'prev,next'
             },
             // 🚫 දැනටමත් බුක් වෙලා තියෙන දවස් පෙන්වන්න (Backend එකෙන් අරන් දාන්න පුළුවන්)
-            events: [
-                { start: '2026-06-25', display: 'background', color: '#fee2e2' }, // බ්ලොක් කරපු දවසක්
-            ],
+            // events: [
+            //     { start: '2026-06-25', display: 'background', color: '#fee2e2' }, // බ්ලොක් කරපු දවසක්
+            // ],
             // 🎯 යූසර් කැලැන්ඩරෙන් දවසක් ක්ලික් කරපු වෙලාව
             select: function(info) {
                 selectedDate = info.startStr;
@@ -143,4 +137,32 @@ function initModalCalendar() {
 
         calendar.render();
     }
+
+ function rebindServiceEvents() {
+
+    // කාඩ් එක උඩ ක්ලික් කරද්දී චෙක්බොක්ස් එක Toggle කරනවා
+    $(document).off('click', '.service-card').on('click', '.service-card', function(e) {
+        if (!$(e.target).is('input[type="checkbox"]')) {
+            let checkbox = $(this).find('.chk-service');
+            checkbox.prop('checked', !checkbox.prop('checked')).trigger('change');
+            return;
+        }
+    });
+
+    // චෙක්බොක්ස් එක වෙනස් වෙද්දී (Checked / Unchecked) ක්‍රියාත්මක වන කොටස
+    $(document).off('change', '.chk-service').on('change', '.chk-service', function() {
+        let card = $(this).closest('.service-card');
+
+        if ($(this).is(':checked')) {
+            // 🟥 සිලෙක්ට් කරපු කාඩ් එකේ බෝඩර් එක විතරක් රතු කරනවා (අනිත් ඒවා uncheck කරන්නේ නෑ!)
+            card.addClass('border-red-500 bg-red-50/30 ring-2 ring-red-500/10');
+        } else {
+            // චෙක් එක අයින් කරොත් රතු පාට අයින් කරනවා
+            card.removeClass('border-red-500 bg-red-50/30 ring-2 ring-red-500/10');
+        }
+
+        // 🔄 හැම වෙලාවෙම බටන් එක ඇක්ටිව්ද කියලා චෙක් කරනවා
+        checkFormValidity();
+    });
+}
 

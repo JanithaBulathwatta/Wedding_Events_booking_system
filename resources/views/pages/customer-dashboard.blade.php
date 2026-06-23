@@ -22,6 +22,17 @@
             animation-play-state: paused;
         }
 
+        .fc .fc-highlight {
+            background: #22c55e !important;
+            opacity: 1 !important;
+        }
+
+
+        .fc-daygrid-day:has(.fc-highlight) .fc-daygrid-day-number {
+            color: #ffffff !important;
+            font-weight: bold !important;
+        }
+
     </style>
 
 @endsection
@@ -294,17 +305,6 @@
 
                         <div class="space-y-2.5 max-h-[220px] overflow-y-auto pr-1" id="servicesList">
 
-                        </div>
-
-                        <div id="serviceDetailsBox"
-                            class="hidden bg-slate-50 border border-slate-100 rounded-2xl p-4 animate-in fade-in duration-300">
-                            <h4 class="text-xs font-bold text-slate-800" id="selectedServiceName">Service Name</h4>
-                            <p class="text-[11px] text-slate-400 mt-1 leading-relaxed" id="selectedServiceDesc">
-                                Description text...</p>
-                            <div class="flex justify-between items-center mt-3 pt-3 border-t border-slate-200/60">
-                                <span class="text-[11px] text-slate-500 font-medium">Price:</span>
-                                <span class="text-sm font-black text-amber-600" id="selectedServicePrice">Rs. 0</span>
-                            </div>
                         </div>
                     </div>
 
