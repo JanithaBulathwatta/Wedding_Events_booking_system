@@ -9,10 +9,14 @@ function validations(){
 }
 function events(){
 
-    $('.provider-card, #btnViewProfile').on('click', function() {
+    $(document).on('click','.btnViewProfile', function() {
         $('#bookingModal').removeClass('hidden').addClass('flex');
+        let name = $(this).data('name');
+        let profilePic = $(this).data('profilepic');
 
-        // 🗓️ මොඩල් එක ඇතුළේ තියෙන FullCalendar එක Initialize කිරීම
+        $('#txtProviderName').text(name);
+        $('#imgProfileImage').attr('src',profilePic);
+
         initModalCalendar();
     });
 

@@ -21,7 +21,7 @@
         .animate-marquee:hover {
             animation-play-state: paused;
         }
-        
+
     </style>
 
 @endsection
@@ -212,10 +212,14 @@
                                     <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Contact</p>
                                     <p class="text-sm font-black text-slate-900">{{ $provider->mobile }}</p>
                                 </div>
-                                <a id="btnViewProfile"
-                                    class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950 transition duration-200 no-underline">
+                                <button
+                                    class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950 transition duration-200 no-underline btnViewProfile"
+                                    data-name = "{{ $provider->name }}" data-groupname = "{{ $provider->group_name }}" data-mobile = "{{ $provider->mobile }}"
+                                    data-profilepic = "{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('storage/images/user.png') }}"
+                                    data-coverimage = "{{ asset('storage/' . $provider->cover_image) }}"
+                                    >
                                     View Profile
-                                </a>
+                            </button>
                             </div>
                         </div>
                     </div>
@@ -229,7 +233,7 @@
         class="fixed inset-0 z-[1000] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
 
         <div
-            class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-6xl h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-7xl h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
 
             <div class="absolute top-4 right-4 z-50">
                 <button type="button" id="btnCloseModal"
@@ -245,10 +249,10 @@
                     class="w-full h-full object-cover" id="providerCover">
 
                 <div class="absolute -bottom-10 left-8 flex items-end gap-4 z-10">
-                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=150"
-                        class="w-24 h-24 rounded-2xl object-cover border-4 border-white shadow-lg" id="providerAvatar">
+                    <img src=""
+                        class="w-24 h-24 rounded-full object-cover border-4 border-white shadow-lg" id="imgProfileImage">
                     <div class="mb-2 bg-white/90 backdrop-blur-md px-3 py-1 rounded-xl border border-white/20 shadow-sm">
-                        <h2 class="text-base font-black text-slate-800" id="providerName">JB Photography</h2>
+                        <h2 class="text-base font-black text-slate-800" id="txtProviderName"></h2>
                         <p class="text-[11px] text-amber-600 font-bold flex items-center gap-1">⭐ 4.9 <span
                                 class="text-slate-400 font-normal">(42 Reviews)</span></p>
                     </div>
@@ -264,6 +268,9 @@
                         <div class="flex items-center gap-2 mb-3">
                             <span class="w-2 h-2 rounded-full bg-amber-500"></span>
                             <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Select an Available Date
+                            </h3><br>
+                            <span class="w-2 h-2 rounded-full bg-red-600"></span>
+                            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-700">Already Booked Bate
                             </h3>
                         </div>
 
