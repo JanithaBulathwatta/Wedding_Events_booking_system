@@ -1,4 +1,4 @@
-    let calendar; // FullCalendar Variable එක
+    let calendar;
     let selectedDate = null;
     let selectedService = null;
 function init(){
@@ -10,6 +10,19 @@ function validations(){
 function events(){
 
     $(document).on('click','.btnViewProfile', function() {
+        selectedDate = null;
+        selectedService = null;
+
+        $('#txtSelectedDateDisplay')
+            .text('Select a Date')
+            .removeClass('bg-green-50 text-green-600 border-green-200/50 bg-amber-50 text-amber-600 border-amber-200/50'); // පරණ CSS ඔක්කොම අයින් කරනවා
+
+        $('#hidBookingDate').val('');
+        $('#hidServiceName').val('');
+
+
+        checkFormValidity();
+        
         $('#bookingModal').removeClass('hidden').addClass('flex');
         let name = $(this).data('name');
         let profilePic = $(this).data('profilepic');
@@ -72,19 +85,18 @@ function events(){
     });
 
     $('#btnCloseModal').on('click', function() {
+        let selectedDate = null;
+        let selectedService = null;
         $('#bookingModal').removeClass('flex').addClass('hidden');
     });
-
 }
 
 function checkFormValidity() {
-    // 🔍 දැනට සිලෙක්ට් වෙලා තියෙන චෙක්බොක්ස් ගණන ගන්නවා
+
     let checkedServicesCount = $('.chk-service:checked').length;
 
-    // 💡 දිනයක් සිලෙක්ට් වෙලා තියෙන්න ඕනේ + අඩුම ගානේ එක සර්විස් එකක් හරි සිලෙක්ට් වෙලා තියෙන්න ඕනේ
     if (selectedDate && checkedServicesCount > 0) {
 
-        // 🚀 Global variable එකට සිලෙක්ට් කරපු සර්විස් එක True (හෝ අගයක්) විදිහට මාර්ක් කරනවා වැලිඩේෂන් එක පාස් වෙන්න
         selectedService = true;
 
         $('#btnSubmitBooking')
@@ -92,7 +104,6 @@ function checkFormValidity() {
             .removeClass('bg-slate-200 text-slate-400 cursor-not-allowed')
             .addClass('bg-amber-500 hover:bg-amber-600 text-slate-950 font-black cursor-pointer');
     }
-    // 🚫 දිනය නැත්නම් හෝ එකම සර්විස් එකක්වත් සිලෙක්ට් කරලා නැත්නම් බටන් එක ලොක් කරනවා
     else {
         selectedService = null;
 
@@ -106,12 +117,11 @@ function checkFormValidity() {
 function initModalCalendar() {
         var calendarEl = document.getElementById('providerCalendar');
 
-        // කලින් කැලැන්ඩරයක් හැදිලා තිබ්බොත් ඒක අයින් කරලා අලුතෙන් හදනවා (ලෙඩ නැති වෙන්න)
         if (calendar) { calendar.destroy(); }
 
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
-            height: 380, // මොඩල් එකට ගැලපෙන උස
+            height: 380,
             selectable: true,
             unselectAuto: false,
             headerToolbar: {
@@ -119,19 +129,14 @@ function initModalCalendar() {
                 center: '',
                 right: 'prev,next'
             },
-            // 🚫 දැනටමත් බුක් වෙලා තියෙන දවස් පෙන්වන්න (Backend එකෙන් අරන් දාන්න පුළුවන්)
-            // events: [
-            //     { start: '2026-06-25', display: 'background', color: '#fee2e2' }, // බ්ලොක් කරපු දවසක්
-            // ],
-            // 🎯 යූසර් කැලැන්ඩරෙන් දවසක් ක්ලික් කරපු වෙලාව
+
             select: function(info) {
                 selectedDate = info.startStr;
 
-                // යූසර්ට පේන්න දිනය අප්ඩේට් කරනවා
                 $('#txtSelectedDateDisplay').text(selectedDate).addClass('bg-amber-50 text-amber-600 border border-amber-200/50');
-                $('#hidBookingDate').val(selectedDate); // Hidden input එකට දානවා
+                $('#hidBookingDate').val(selectedDate);
 
-                checkFormValidity(); // බටන් එක ඇක්ටිව් කරන්න පුළුවන්ද බලනවා
+                checkFormValidity();
             }
         });
 
@@ -140,7 +145,6 @@ function initModalCalendar() {
 
  function rebindServiceEvents() {
 
-    // කාඩ් එක උඩ ක්ලික් කරද්දී චෙක්බොක්ස් එක Toggle කරනවා
     $(document).off('click', '.service-card').on('click', '.service-card', function(e) {
         if (!$(e.target).is('input[type="checkbox"]')) {
             let checkbox = $(this).find('.chk-service');
@@ -149,19 +153,14 @@ function initModalCalendar() {
         }
     });
 
-    // චෙක්බොක්ස් එක වෙනස් වෙද්දී (Checked / Unchecked) ක්‍රියාත්මක වන කොටස
     $(document).off('change', '.chk-service').on('change', '.chk-service', function() {
         let card = $(this).closest('.service-card');
 
         if ($(this).is(':checked')) {
-            // 🟥 සිලෙක්ට් කරපු කාඩ් එකේ බෝඩර් එක විතරක් රතු කරනවා (අනිත් ඒවා uncheck කරන්නේ නෑ!)
             card.addClass('border-red-500 bg-red-50/30 ring-2 ring-red-500/10');
         } else {
-            // චෙක් එක අයින් කරොත් රතු පාට අයින් කරනවා
             card.removeClass('border-red-500 bg-red-50/30 ring-2 ring-red-500/10');
         }
-
-        // 🔄 හැම වෙලාවෙම බටන් එක ඇක්ටිව්ද කියලා චෙක් කරනවා
         checkFormValidity();
     });
 }
