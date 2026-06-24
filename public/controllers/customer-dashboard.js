@@ -22,8 +22,9 @@ function events(){
 
 
         checkFormValidity();
-        
+
         $('#bookingModal').removeClass('hidden').addClass('flex');
+        
         let name = $(this).data('name');
         let profilePic = $(this).data('profilepic');
         let coverPic = $(this).data('coverimage');
