@@ -235,6 +235,7 @@
                                     data-descriptions = "{{ json_encode($descriptions) }}"
                                     data-prices = "{{ json_encode($prices) }}"
                                     data-packageTypes = "{{ json_encode($packageTypes) }}"
+                                    data-providerid = "{{ $provider->id }}"
                                     >
                                     View Profile
                             </button>
@@ -315,13 +316,13 @@
                                 class="font-bold text-slate-700 bg-slate-100 px-2.5 py-1 rounded-lg">None</span>
                         </div>
 
-                        <form id="frmConfirmBooking" action="/bookings/store" method="POST">
+                        <form id="frmConfirmBooking" method="">
                             @csrf
-                            <input type="hidden" name="provider_id" id="hidProviderId" value="1">
+                            <input type="hidden" name="provider_id" id="hidProviderId" >
                             <input type="hidden" name="service_name" id="hidServiceName">
                             <input type="hidden" name="booking_date" id="hidBookingDate">
 
-                            <button type="submit" id="btnSubmitBooking" disabled
+                            <button id="btnSubmitBooking" disabled
                                 class="w-full bg-slate-200 text-slate-400 font-bold text-xs py-3 rounded-xl transition duration-200 cursor-not-allowed uppercase tracking-wider shadow-md">
                                 Confirm Booking
                             </button>

@@ -24,7 +24,7 @@ function events(){
         checkFormValidity();
 
         $('#bookingModal').removeClass('hidden').addClass('flex');
-        
+
         let name = $(this).data('name');
         let profilePic = $(this).data('profilepic');
         let coverPic = $(this).data('coverimage');
@@ -33,13 +33,15 @@ function events(){
         let descriptions = $(this).data('descriptions');
         let prices = $(this).data('prices');
         let packageTypes = $(this).data('packagetypes');
+        let providerId = $(this).data('providerid');
 
+        $('#hidProviderId').val(providerId);
         $('#txtProviderName').text(name);
         $('#imgProfileImage').attr('src',profilePic);
         $('#imgCoverImage').attr('src',coverPic);
         $('#txtMobile').text(mobile);
 
-
+        console.log('id',$('#hidProviderId').val());
         $('#servicesList').empty();
         services.forEach(function(service, index) {
             let serviceName = service ? service.trim() : '';
@@ -89,6 +91,10 @@ function events(){
         let selectedDate = null;
         let selectedService = null;
         $('#bookingModal').removeClass('flex').addClass('hidden');
+    });
+
+    $('#btnSubmitBooking').click(function(e){
+        
     });
 }
 
