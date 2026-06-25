@@ -41,7 +41,7 @@ function events(){
         $('#imgCoverImage').attr('src',coverPic);
         $('#txtMobile').text(mobile);
 
-        console.log('id',$('#hidProviderId').val());
+
         $('#servicesList').empty();
         services.forEach(function(service, index) {
             let serviceName = service ? service.trim() : '';
@@ -55,7 +55,9 @@ function events(){
                 let serviceCardHtml = `
                     <div class="service-card border border-slate-200 rounded-2xl p-3 cursor-pointer transition hover:border-red-500/50 flex justify-between items-center bg-slate-50/50 gap-3 select-none"
                         data-price="${servicePrice}"
-                        data-desc="${serviceDesc}">
+                        data-desc="${serviceDesc}"
+                        data-servicename = "${serviceName}"
+                        data-packagetype = "${packageType}">
 
                         <div class="flex items-center gap-3 w-full">
                             <div class="relative flex items-center justify-center shrink-0">
@@ -94,7 +96,39 @@ function events(){
     });
 
     $('#btnSubmitBooking').click(function(e){
-        
+        e.preventDefault();
+
+        let providerId = $('#hidProviderId').val();
+        let bookingData = $('#hidBookingDate').val();
+        let selectedList = [];
+        let totalPrice = 0;
+
+        $('.chk-service:checked').each(function(){
+            let card = $(this).closest('.service-card');
+            
+            let price = parseFloat(card.data('price') || 0);
+            let description = card.data('desc');
+            let serviceName = card.data('servicename');
+            let packageType = card.data('packagetype');
+
+            selectedList.push({
+               price:price,
+               description:description,
+               serviceName:serviceName,
+               packageType:packageType
+            });
+            totalPrice+=price;
+        });
+
+        let dataSet = {
+            providerId:providerId,
+            totalPrice:totalPrice,
+            bookingData:bookingData,
+            selectedList:selectedList
+        }
+
+        console.log(dataSet);
+
     });
 }
 
