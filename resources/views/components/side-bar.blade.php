@@ -56,7 +56,7 @@
             <!-- My Bookings -->
             <a href="{{ route('booking.show') }}"
                class="flex items-center space-x-3 px-4 py-3 rounded-xl transition group
-               {{ request()->routeIs('provider.bookings*') ? 'bg-amber-500/10 text-amber-400 font-semibold' : 'text-slate-400 hover:bg-slate-800 hover:text-amber-400 font-medium' }}">
+               {{ request()->routeIs('booking.show*') ? 'bg-amber-500/10 text-amber-400 font-semibold' : 'text-slate-400 hover:bg-slate-800 hover:text-amber-400 font-medium' }}">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
                 </svg>
