@@ -5,6 +5,7 @@ use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MapFinderController;
 use App\Http\Controllers\PackageController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProviderBookingController;
 use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
@@ -46,6 +47,9 @@ Route::middleware('auth')->group(function () {
 
     //booking
     Route::post('/set-booking-details',[BookingController::class,'setBookingDetails']);
+
+    //provider-bookings
+    Route::get('/get-provider-bookings',[ProviderBookingController::class,'loadProviderBookings'])->name('booking.show');
 });
 
 
