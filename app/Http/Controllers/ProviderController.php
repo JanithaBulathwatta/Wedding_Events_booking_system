@@ -14,7 +14,11 @@ class ProviderController extends Controller
                             ->where('record_status',1)
                             ->where('is_active',1)
                             ->count();
+        $bookingCount = DB::table('bookings')
+                            ->where('provider_id',Auth::id())
+                            ->where('record_status',1)
+                            ->count();
 
-        return view('pages.service-provider-dashboard',compact('packageCount'));
+        return view('pages.service-provider-dashboard',compact('packageCount','bookingCount'));
     }
 }
