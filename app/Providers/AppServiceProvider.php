@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Repository\BookingServiceRepository;
+use App\Repository\Interfaces\BookingServiceInterface;
 use App\Repository\Interfaces\MapFinderServiceInterface;
 use App\Repository\Interfaces\PackageServiceInterface;
 use App\Repository\Interfaces\UserProfileServiceInterface;
@@ -20,6 +22,7 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(UserProfileServiceInterface::class,UserProfileServiceRepository::class);
         $this->app->bind(PackageServiceInterface::class,PackageServiceRepository::class);
         $this->app->bind(MapFinderServiceInterface::class,MapFinderServiceRepository::class);
+        $this->app->bind(BookingServiceInterface::class,BookingServiceRepository::class);
     }
 
     /**

@@ -99,7 +99,7 @@ function events(){
         e.preventDefault();
 
         let providerId = $('#hidProviderId').val();
-        let bookingData = $('#hidBookingDate').val();
+        let bookingDate = $('#hidBookingDate').val();
         let selectedList = [];
         let totalPrice = 0;
 
@@ -123,17 +123,35 @@ function events(){
         let dataSet = {
             providerId:providerId,
             totalPrice:totalPrice,
-            bookingData:bookingData,
+            bookingDate:bookingDate,
             selectedList:selectedList
         }
 
         $.ajax({
             type: "POST",
-            url: "set-booking-details",
+            url: "/set-booking-details",
             data: dataSet,
             dataType: "json",
             success: function (response) {
-
+                if(response.status == 200){
+                    swal.fire({
+                        title:'Success!',
+                        text:response.message,
+                        icon:'success',
+                        confirmButtonText:'ok'
+                    });
+                    $('#btnCloseModal').click();
+                }else{
+                    swal.fire({
+                        title:'Warning!',
+                        text:response.message,
+                        icon:'warning',
+                        confirmButtonText:'ok'
+                    });
+                }
+            },
+            error:function(xhr){
+                console.log(xhr.responseText);
             }
         });
 
