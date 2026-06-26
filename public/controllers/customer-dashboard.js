@@ -105,7 +105,7 @@ function events(){
 
         $('.chk-service:checked').each(function(){
             let card = $(this).closest('.service-card');
-            
+
             let price = parseFloat(card.data('price') || 0);
             let description = card.data('desc');
             let serviceName = card.data('servicename');
@@ -127,7 +127,15 @@ function events(){
             selectedList:selectedList
         }
 
-        console.log(dataSet);
+        $.ajax({
+            type: "POST",
+            url: "set-booking-details",
+            data: dataSet,
+            dataType: "json",
+            success: function (response) {
+
+            }
+        });
 
     });
 }

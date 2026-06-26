@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MapFinderController;
 use App\Http\Controllers\PackageController;
@@ -42,6 +43,9 @@ Route::middleware('auth')->group(function () {
     //map
     Route::get('/get-map-details',[MapFinderController::class,'loadMap']);
     Route::get('/get-provider-location-details',[MapFinderController::class,'getLocationDetails']);
+
+    //booking
+    Route::post('/set-booking-details',[BookingController::class,'setBookingDetails']);
 });
 
 
