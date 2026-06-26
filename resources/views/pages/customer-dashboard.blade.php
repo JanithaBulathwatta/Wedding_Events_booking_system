@@ -161,6 +161,7 @@
                                 $prices = explode(',',$provider->prices);
                                 $descriptions = explode(',',$provider->descriptions);
                                 $packageTypes = explode(',',$provider->package_names);
+                                $bookingDtaes = explode(',',$provider->dates);
                                 $serviceCount = count($serviceList);
                             @endphp
 
@@ -236,6 +237,7 @@
                                     data-prices = "{{ json_encode($prices) }}"
                                     data-packageTypes = "{{ json_encode($packageTypes) }}"
                                     data-providerid = "{{ $provider->id }}"
+                                    data-bookingdates = "{{ json_encode($bookingDtaes) }}"
                                     >
                                     View Profile
                             </button>
@@ -321,6 +323,7 @@
                             <input type="hidden" name="provider_id" id="hidProviderId" >
                             <input type="hidden" name="service_name" id="hidServiceName">
                             <input type="hidden" name="booking_date" id="hidBookingDate">
+                            <input type="hidden" name="hdnAllBookingDates" id="hdnAllBookingDates">
 
                             <button id="btnSubmitBooking" disabled
                                 class="w-full bg-slate-200 text-slate-400 font-bold text-xs py-3 rounded-xl transition duration-200 cursor-not-allowed uppercase tracking-wider shadow-md">

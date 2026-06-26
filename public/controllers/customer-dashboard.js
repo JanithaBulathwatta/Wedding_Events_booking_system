@@ -34,12 +34,26 @@ function events(){
         let prices = $(this).data('prices');
         let packageTypes = $(this).data('packagetypes');
         let providerId = $(this).data('providerid');
+        let bookingDates = $(this).data('bookingdates') || [];
+
 
         $('#hidProviderId').val(providerId);
         $('#txtProviderName').text(name);
         $('#imgProfileImage').attr('src',profilePic);
         $('#imgCoverImage').attr('src',coverPic);
         $('#txtMobile').text(mobile);
+        $('#hdnAllBookingDates').val(bookingDates);
+
+        let calenderEvents = bookingDates.map(function(dateStr){
+            return {
+                title: 'Booked',
+                start: dateStr,
+                display: 'block',
+                backgroundColor: '#b91c1c',
+                borderColor: '#991b1b',
+                textColor: '#ffffff'
+            };
+        });
 
 
         $('#servicesList').empty();
@@ -86,7 +100,7 @@ function events(){
         });
 
         rebindServiceEvents();
-        initModalCalendar();
+        initModalCalendar(calenderEvents,bookingDates);
     });
 
     $('#btnCloseModal').on('click', function() {
@@ -181,7 +195,7 @@ function checkFormValidity() {
     }
 }
 
-function initModalCalendar() {
+function initModalCalendar(calenderEvents,bookingDates) {
         var calendarEl = document.getElementById('providerCalendar');
 
         if (calendar) { calendar.destroy(); }
@@ -195,6 +209,15 @@ function initModalCalendar() {
                 left: 'title',
                 center: '',
                 right: 'prev,next'
+            },
+            events:calenderEvents,
+
+            selectAllow: function(selectInfo) {
+                let clickedDate = selectInfo.startStr;
+                if (bookingDates.includes(clickedDate)) {
+                    return false;
+                }
+                return true;
             },
 
             select: function(info) {
