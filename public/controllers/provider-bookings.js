@@ -6,7 +6,7 @@ function validations(){
 }
 function events(){
 
-    $('#btnHandler').each(function(){
+    $('.btnHandler').each(function(){
         let container = $(this);
         let status = parseInt(container.data('status'));
         let id = container.data('id');
@@ -15,6 +15,15 @@ function events(){
     });
 
     $(document).on('click','.btn-status-update',function(){
+        let button  = $(this);
+        let bookingId = button.data('booking-id');
+        let newStatus = parseInt(button.data('new-status'));
+        let container = $(`#btnHandler-${bookingId}`);
+
+        container.data('status', newStatus);
+
+        buttonHandler(newStatus,bookingId,container);
+
 
     });
 
@@ -34,7 +43,7 @@ function buttonHandler(status, bookingId, container){
     }
     else if(status == 1){
         container.html(`
-            <button data-booking-id="${bookingId}" data-new-status="2" class="w-full lg:w-auto px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-colors duration-150">
+            <button data-booking-id="${bookingId}" data-new-status="2" class="btn-status-update w-full lg:w-auto px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-colors duration-150">
                  <i class="fa-solid fa-circle-check mr-1.5"></i> Mark As Completed
             </button>
         `);

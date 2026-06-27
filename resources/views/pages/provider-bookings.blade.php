@@ -82,8 +82,8 @@
                     </div>
                 </div>
 
-                <div class="flex space-x-2 w-full lg:w-auto mt-4 lg:mt-0"
-                id="btnHandler"
+                <div class="flex space-x-2 w-full lg:w-auto mt-4 lg:mt-0 btnHandler"
+                id="btnHandler-{{ $booking->id }}"
                 data-status = "{{ $booking->status }}"
                 data-id = "{{ $booking->id }}"
                 >
