@@ -16,6 +16,7 @@ class ProviderBookingController extends Controller
                               up.mobile,
                               up.address,
                               b.services,
+                              b.id,
                               b.total_price,
                               b.booking_date,
                               b.status
