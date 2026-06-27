@@ -22,47 +22,63 @@
 
     <div class="grid grid-cols-1 gap-6">
 
+        @foreach ($bookings as $booking)
+
         <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row justify-between gap-6">
 
             <div class="space-y-4 flex-1">
                 <div class="flex items-center space-x-3">
                     <div class="h-10 w-10 rounded-full bg-amber-500/10 flex items-center justify-center text-amber-600 font-bold text-sm">
-                        JB
+                        {{ substr($booking->full_name, 0, 1) }}
                     </div>
                     <div>
-                        <h3 class="font-semibold text-slate-800 text-base">Janitha Bulathwatta</h3>
+                        <h3 class="font-semibold text-slate-800 text-base">{{ $booking->full_name }}</h3>
                         <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-slate-500 mt-0.5">
-                            <span><i class="fa-solid fa-phone mr-1"></i> +94 7X XXX XXXX</span>
-                            <span><i class="fa-solid fa-location-dot mr-1"></i> Teldeniya, Kandy</span>
-                            <span><i class="fa-solid fa-calendar-days mr-1"></i> Booked Date: <b>2026-06-28</b></span>
+                            <span><i class="fa-solid fa-phone mr-1"></i> {{ $booking->mobile }}</span>
+                            <span><i class="fa-solid fa-location-dot mr-1"></i> {{ $booking->address }}</span>
+                            <span><i class="fa-solid fa-calendar-days mr-1"></i> Booked Date: <b>{{ $booking->booking_date }}</b></span>
                         </div>
                     </div>
                 </div>
 
                 <div class="bg-slate-50/80 border border-slate-100 rounded-xl p-4">
                     <span class="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-2">Requested Services</span>
+                    @php
+                        $services = json_decode($booking->services,true) ?? [];
+                    @endphp
                     <div class="flex flex-wrap gap-2">
-                        <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-700 shadow-sm">
-                            <i class="fa-solid fa-camera text-amber-500 mr-1.5 text-[10px]"></i> Wedding Photography
-                        </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-700 shadow-sm">
-                            <i class="fa-solid fa-video text-amber-500 mr-1.5 text-[10px]"></i> 4K Videography
-                        </span>
-                        <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-700 shadow-sm">
-                            <i class="fa-solid fa-wand-magic-sparkles text-amber-500 mr-1.5 text-[10px]"></i> Album Designing
-                        </span>
+                        @foreach ($services as $service)
+                            <span class="inline-flex items-center px-3 py-1 rounded-lg text-xs font-medium bg-white border border-slate-200 text-slate-700 shadow-sm">
+                                {{ $service['serviceName'] }} : {{ $service['packageType'] }} - Rs. {{ number_format($service['price'] ?? 0), 2 }}
+                            </span>
+                        @endforeach
                     </div>
                 </div>
             </div>
 
             <div class="flex flex-col justify-between items-end min-w-[200px] border-t lg:border-t-0 pt-4 lg:pt-0 border-slate-100">
                 <div class="flex lg:flex-col items-center lg:items-end justify-between w-full gap-2">
-                    <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 border border-amber-200/60">
-                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span> Pending Request
-                    </span>
+                    @if ($booking->status == 0)
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 border border-amber-200/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span> Pending
+                        </span>
+                    @elseif ($booking->status == 1)
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 border border-blue-200/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-1.5"></span> Approved
+                        </span>
+                    @elseif ($booking->status == 2)
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Completed Task
+                        </span>
+                    @elseif ($booking->status == 3)
+                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 border border-red-200/60">
+                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5"></span>  Rejected
+                        </span>
+                    @endif
+
                     <div class="lg:mt-2 text-right">
                         <span class="text-xs text-slate-400 block">Total Price</span>
-                        <span class="text-xl font-bold text-slate-800">Rs. 85,000.00</span>
+                        <span class="text-xl font-bold text-slate-800">Rs. {{ $booking->total_price ?? 0 }}</span>
                     </div>
                 </div>
 
@@ -76,9 +92,10 @@
                 </div>
             </div>
         </div>
+        @endforeach
 
 
-        <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row justify-between gap-6">
+        {{-- <div class="bg-white border border-slate-200/80 rounded-2xl p-6 shadow-sm hover:shadow-md transition-all duration-200 flex flex-col lg:flex-row justify-between gap-6">
             <div class="space-y-4 flex-1">
                 <div class="flex items-center space-x-3">
                     <div class="h-10 w-10 rounded-full bg-blue-500/10 flex items-center justify-center text-blue-600 font-bold text-sm">
@@ -155,7 +172,7 @@
                     Closed on 2026-05-16
                 </div>
             </div>
-        </div>
+        </div> --}}
 
     </div>
 </div>

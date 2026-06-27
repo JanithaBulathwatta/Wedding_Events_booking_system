@@ -18,7 +18,7 @@ return new class extends Migration
             $table->json('services');
             $table->decimal('total_price', 10, 2);
             $table->date('booking_date');
-            $table->tinyInteger('status')->default(0); // pending = 0, approved = 1, completed = 3, canceled = 4
+            $table->tinyInteger('status')->default(0); // pending = 0, approved = 1, completed = 2, reject = 3
             $table->tinyInteger('record_status')->default(1);
             $table->timestamps();
         });
