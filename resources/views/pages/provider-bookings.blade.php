@@ -58,24 +58,9 @@
 
             <div class="flex flex-col justify-between items-end min-w-[200px] border-t lg:border-t-0 pt-4 lg:pt-0 border-slate-100">
                 <div class="flex lg:flex-col items-center lg:items-end justify-between w-full gap-2">
-                    @if ($booking->status == 0)
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-amber-50 text-amber-600 border border-amber-200/60">
-                            <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5 animate-pulse"></span> Pending
-                        </span>
-                    @elseif ($booking->status == 1)
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-blue-50 text-blue-600 border border-blue-200/60">
-                            <span class="w-1.5 h-1.5 rounded-full bg-blue-500 mr-1.5"></span> Approved
-                        </span>
-                    @elseif ($booking->status == 2)
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-50 text-emerald-600 border border-emerald-200/60">
-                            <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 mr-1.5"></span> Completed Task
-                        </span>
-                    @elseif ($booking->status == 3)
-                        <span class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600 border border-red-200/60">
-                            <span class="w-1.5 h-1.5 rounded-full bg-red-500 mr-1.5"></span>  Rejected
-                        </span>
-                    @endif
+                    <div id="badgeHandler-{{ $booking->id }}">
 
+                    </div>
                     <div class="lg:mt-2 text-right">
                         <span class="text-xs text-slate-400 block">Total Price</span>
                         <span class="text-xl font-bold text-slate-800">Rs. {{ $booking->total_price ?? 0 }}</span>
