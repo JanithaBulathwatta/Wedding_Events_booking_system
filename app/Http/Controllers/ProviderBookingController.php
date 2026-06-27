@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\ProviderBookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -32,5 +33,11 @@ class ProviderBookingController extends Controller
         $bookings = DB::select($bookingSQL);
 
         return view('pages.provider-bookings',compact('bookings'));
+    }
+
+    public function setBookingStatus(Request $request){
+        dd($request->all());
+        $response = ProviderBookingService::setBookingStatus($request);
+        return response()->json($response);
     }
 }

@@ -28,6 +28,20 @@ function events(){
         buttonHandler(newStatus,bookingId,container);
         renderStatusBadge(badgeContainer, newStatus);
 
+        let data = {
+            status:newStatus
+        }
+
+        $.ajax({
+            type: "POST",
+            url: "/set-booking-status",
+            data: data,
+            dataType: "json",
+            success: function (response) {
+
+            }
+        });
+
     });
 
 }
