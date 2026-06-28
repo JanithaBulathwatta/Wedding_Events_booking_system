@@ -2,9 +2,11 @@
 namespace App\Repository;
 use App\Repository\Interfaces\UserProfileServiceInterface;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class UserProfileServiceRepository implements UserProfileServiceInterface{
 
@@ -71,7 +73,10 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
                     ->where('id',$userId)
                     ->first();
 
-        if($user && $user->is_provider == 1){
+        DB::beginTransaction();
+        
+        try {
+            if($user && $user->is_provider == 1){
             DB::table('user_profile')
                 ->insert([
                     "full_name" =>$fullName,
@@ -111,11 +116,24 @@ class UserProfileServiceRepository implements UserProfileServiceInterface{
 
             $redirectUrl = route('customer.dashboard');
         }
+        DB::commit();
 
         return[
             "status"=>200,
             "message"=>"you are succesfully Registered",
             "redirect"=>$redirectUrl
         ];
+        } catch (Exception $e) {
+
+            DB::rollBack();
+
+            Log::error("Registration error: ".$e->getMessage());
+
+            return[
+                "status"=>400,
+                "message"=>"Registration failed. Please try again later.",
+            ];
+        }
+
     }
 }
