@@ -18,6 +18,7 @@ function events(){
     });
 
     $(document).on('click','.btn-status-update',function(){
+
         let button  = $(this);
         let bookingId = button.data('booking-id');
         let newStatus = parseInt(button.data('new-status'));
@@ -25,20 +26,47 @@ function events(){
         let badgeContainer = $(`#badgeHandler-${bookingId}`);
         container.data('status', newStatus);
 
-        buttonHandler(newStatus,bookingId,container);
-        renderStatusBadge(badgeContainer, newStatus);
-
-        let data = {
-            status:newStatus
+        let message = "";
+        if(newStatus == 1){
+            message = "Do you want approve the Request?";
+        }
+        else if(newStatus == 2){
+            message = "Do you want complete the task?";
+        }
+        else if(newStatus == 3){
+            message = "Do you want Reject the Request?";
         }
 
-        $.ajax({
-            type: "POST",
-            url: "/set-booking-status",
-            data: data,
-            dataType: "json",
-            success: function (response) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: message,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes'
+        }).then((result) => {
+            if (result.isConfirm){
 
+                buttonHandler(newStatus,bookingId,container);
+                renderStatusBadge(badgeContainer, newStatus);
+
+                let data = {
+                    status:newStatus
+                }
+
+                $.ajax({
+                    type: "POST",
+                    url: "/set-booking-status",
+                    data: data,
+                    dataType: "json",
+                    success: function (response) {
+
+                    },
+                    error:function(xhr){
+                        console.log(xhr.responseText);
+                    }
+                });
             }
         });
 

@@ -116,7 +116,7 @@ function events(){
     $('.image-uploader').on('change', function() {
         let file = this.files[0];
 
-        // HTML එකේ ලියාපු IDs ටික මෙතනින් dynamic ව අල්ලගන්නවා
+        
         let previewDiv = $(this).data('target-preview');
         let imgTag = $(this).data('target-img');
         let textTag = $(this).data('target-text');
@@ -129,24 +129,24 @@ function events(){
             }
             reader.readAsDataURL(file);
 
-            // අදාළ Preview එක විතරක් පෙන්වනවා
+
             $(previewDiv).removeClass('hidden').addClass('flex');
         } else {
             $(previewDiv).addClass('hidden').removeClass('flex');
         }
     });
 
-    // ✕ 2. අයින් කරන බටන් එක ඔබද්දී (Profile හෝ Cover දෙකටම පොදුයි)
+
     $('.btn-remove-preview').on('click', function(e) {
         e.preventDefault();
 
-        // බටන් එකේ තියෙන data attributes වලින් අදාළ IDs ටික ගන්නවා
+
         let inputId = $(this).data('input');
         let previewDiv = $(this).data('preview');
         let imgTag = $(this).data('img');
         let textTag = $(this).data('text');
 
-        // ඒ අදාළ ඒවා විතරක් reset කරනවා මචං
+
         $(inputId).val('');
         $(imgTag).attr('src', '');
         $(textTag).text('');
