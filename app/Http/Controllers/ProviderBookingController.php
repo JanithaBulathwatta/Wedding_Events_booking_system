@@ -36,7 +36,7 @@ class ProviderBookingController extends Controller
     }
 
     public function setBookingStatus(Request $request){
-        dd($request->all());
+        
         $response = ProviderBookingService::setBookingStatus($request);
         return response()->json($response);
     }

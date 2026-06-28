@@ -27,7 +27,7 @@ function events(){
         container.data('status', newStatus);
 
         let message = "";
-        if(newStatus == 1){
+        if(newStatus == '1'){
             message = "Do you want approve the Request?";
         }
         else if(newStatus == 2){
@@ -46,13 +46,14 @@ function events(){
             cancelButtonColor: '#3085d6',
             confirmButtonText: 'Yes'
         }).then((result) => {
-            if (result.isConfirm){
+            if (result.isConfirmed){
 
                 buttonHandler(newStatus,bookingId,container);
                 renderStatusBadge(badgeContainer, newStatus);
 
                 let data = {
-                    status:newStatus
+                    status:newStatus,
+                    bookingId:bookingId
                 }
 
                 $.ajax({
@@ -61,7 +62,9 @@ function events(){
                     data: data,
                     dataType: "json",
                     success: function (response) {
-
+                        if(response.status == 400){
+                            Swal.fire('Error!',response.message,'error');
+                        }
                     },
                     error:function(xhr){
                         console.log(xhr.responseText);
