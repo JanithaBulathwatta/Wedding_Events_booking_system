@@ -1,7 +1,6 @@
 let calendar;
 function init(){
-
-    initModalCalendar();
+    getBookingDates();
 }
 function validations(){
 
@@ -140,11 +139,27 @@ function getBookingDates(){
         url: "/get-booking-dates",
         dataType: "json",
         success: function (response) {
+            if(response.status == 200){
+                let bookingDates = response.dataSet;
+                let bookingDateList = bookingDates.map(item=>item.booking_date);
 
+                let calenderEvents = bookingDateList.map(function(dateStr){
+                    return {
+                        title: 'Booked',
+                        start: dateStr,
+                        display: 'block',
+                        backgroundColor: '#b91c1c',
+                        borderColor: '#991b1b',
+                        textColor: '#ffffff'
+                    };
+                });
+
+                initModalCalendar(calenderEvents);
+            }
         }
     });
 }
-function initModalCalendar() {
+function initModalCalendar(calenderEvents) {
         var calendarEl = document.getElementById('bookingCalendar');
 
         if (calendar) { calendar.destroy(); }
@@ -152,31 +167,14 @@ function initModalCalendar() {
         calendar = new FullCalendar.Calendar(calendarEl, {
             initialView: 'dayGridMonth',
             height: 380,
-            selectable: true,
+            selectable: false,
             unselectAuto: false,
             headerToolbar: {
                 left: 'title',
                 center: '',
                 right: 'prev,next'
             },
-            // events:calenderEvents,
-
-            // selectAllow: function(selectInfo) {
-            //     let clickedDate = selectInfo.startStr;
-            //     if (bookingDates.includes(clickedDate)) {
-            //         return false;
-            //     }
-            //     return true;
-            // },
-
-            // select: function(info) {
-            //     selectedDate = info.startStr;
-
-            //     $('#txtSelectedDateDisplay').text(selectedDate).addClass('bg-amber-50 text-amber-600 border border-amber-200/50');
-            //     $('#hidBookingDate').val(selectedDate);
-
-            //     checkFormValidity();
-            // }
+            events:calenderEvents,
         });
 
         calendar.render();

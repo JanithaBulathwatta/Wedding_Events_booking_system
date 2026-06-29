@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     //provider-bookings
     Route::get('/get-provider-bookings',[ProviderBookingController::class,'loadProviderBookings'])->name('booking.show');
     Route::post('/set-booking-status',[ProviderBookingController::class,'setBookingStatus']);
-    Route::post('/get-booking-dates',[ProviderBookingController::class,'getBookingDates']);
+    Route::get('/get-booking-dates',[ProviderBookingController::class,'getBookingDates']);
 });
 
 
