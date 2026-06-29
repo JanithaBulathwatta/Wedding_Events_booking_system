@@ -1,5 +1,7 @@
+let calendar;
 function init(){
 
+    initModalCalendar();
 }
 function validations(){
 
@@ -130,4 +132,52 @@ function renderStatusBadge(container, status) {
             </span>
         `);
     }
+}
+
+function getBookingDates(){
+    $.ajax({
+        type: "GET",
+        url: "/get-booking-dates",
+        dataType: "json",
+        success: function (response) {
+
+        }
+    });
+}
+function initModalCalendar() {
+        var calendarEl = document.getElementById('bookingCalendar');
+
+        if (calendar) { calendar.destroy(); }
+
+        calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            height: 380,
+            selectable: true,
+            unselectAuto: false,
+            headerToolbar: {
+                left: 'title',
+                center: '',
+                right: 'prev,next'
+            },
+            // events:calenderEvents,
+
+            // selectAllow: function(selectInfo) {
+            //     let clickedDate = selectInfo.startStr;
+            //     if (bookingDates.includes(clickedDate)) {
+            //         return false;
+            //     }
+            //     return true;
+            // },
+
+            // select: function(info) {
+            //     selectedDate = info.startStr;
+
+            //     $('#txtSelectedDateDisplay').text(selectedDate).addClass('bg-amber-50 text-amber-600 border border-amber-200/50');
+            //     $('#hidBookingDate').val(selectedDate);
+
+            //     checkFormValidity();
+            // }
+        });
+
+        calendar.render();
 }

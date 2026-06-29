@@ -36,8 +36,15 @@ class ProviderBookingController extends Controller
     }
 
     public function setBookingStatus(Request $request){
-        
+
         $response = ProviderBookingService::setBookingStatus($request);
         return response()->json($response);
     }
+
+    public function getBookingDates(Request $request){
+
+        $response = ProviderBookingService::getBookingDates($request);
+        return response()->json($response);
+    }
+
 }

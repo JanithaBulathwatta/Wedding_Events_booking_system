@@ -231,7 +231,7 @@ function initModalCalendar(calenderEvents,bookingDates) {
         });
 
         calendar.render();
-    }
+}
 
  function rebindServiceEvents() {
 

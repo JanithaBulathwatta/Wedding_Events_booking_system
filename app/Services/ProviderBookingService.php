@@ -10,4 +10,9 @@ class ProviderBookingService{
         return $result;
     }
 
+    public static function getBookingDates($request){
+        $result = app()->make(ProviderBookingServiceInterface::class)->getBookingDates($request);
+        return $result;
+    }
+
 }
