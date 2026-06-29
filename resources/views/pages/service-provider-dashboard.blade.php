@@ -25,7 +25,7 @@
         <!-- Card 3: Total Earnings -->
         <div class="bg-slate-900 border border-slate-800/60 rounded-2xl p-6 relative overflow-hidden shadow-xl">
             <p class="text-xs font-bold text-amber-400/80 uppercase tracking-wider">Toatal Income</p>
-            <h3 class="text-3xl font-black text-amber-400 mt-2">Rs. 185,000</h3>
+            <h3 class="text-3xl font-black text-amber-400 mt-2 money-counter-value" data-target="{{ $totalIncome ?? 0 }}">Rs 0.00</h3>
             <p class="text-xs text-emerald-400 font-semibold mt-1 flex items-center">
                 <svg class="w-3 h-3 mr-1" fill="currentColor" viewBox="0 0 24 24"><path d="M4 12l1.41 1.41L11 7.83V20h2V7.83l5.58 5.59L20 12l-8-8-8 8z"/></svg>
                 this month +12%

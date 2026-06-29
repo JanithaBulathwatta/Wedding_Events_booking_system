@@ -116,7 +116,6 @@ function events(){
     $('.image-uploader').on('change', function() {
         let file = this.files[0];
 
-        
         let previewDiv = $(this).data('target-preview');
         let imgTag = $(this).data('target-img');
         let textTag = $(this).data('target-text');
@@ -140,12 +139,10 @@ function events(){
     $('.btn-remove-preview').on('click', function(e) {
         e.preventDefault();
 
-
         let inputId = $(this).data('input');
         let previewDiv = $(this).data('preview');
         let imgTag = $(this).data('img');
         let textTag = $(this).data('text');
-
 
         $(inputId).val('');
         $(imgTag).attr('src', '');
@@ -172,10 +169,19 @@ function setUserProfile(data){
         contentType: false,
         success: function (response) {
             if(response.status == 200){
-                console.log(response);
-                alert(response.message);
-                window.location.href = response.redirect;
                 $('#frmProfileSetup')[0].reset();
+                Swal.fire({
+                    title:"Success!",
+                    text:response.message,
+                    icon:"success",
+                    timer:1500,
+                    showConfirmButton:false
+                }).then(()=>{
+                    window.location.href = response.redirect;
+                });
+            }
+            else{
+                Swal.fire('Error!',response.message,'error');
             }
         },
         error:function(xhr){

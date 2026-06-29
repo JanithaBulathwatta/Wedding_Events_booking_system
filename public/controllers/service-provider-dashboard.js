@@ -28,4 +28,36 @@ function events(){
             }
         });
     });
+
+    $('.money-counter-value').each(function() {
+        let $this = $(this);
+        let countTo = parseInt($this.attr('data-target'));
+
+        if (countTo === 0) {
+            $this.text(0);
+            return;
+        }
+
+        $({ countNum: 0 }).animate({
+            countNum: countTo
+        },
+        {
+            duration: 500,
+            easing: 'swing',
+            step: function() {
+                let formattedStep = Number(this.countNum).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                $this.text("Rs. " + formattedStep);
+            },
+            complete: function() {
+                let formattedFinal = Number(countTo).toLocaleString('en-US', {
+                    minimumFractionDigits: 2,
+                    maximumFractionDigits: 2
+                });
+                $this.text("Rs. " + formattedFinal);
+            }
+        });
+    });
 }
