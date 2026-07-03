@@ -42,7 +42,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
 
     //map
-    Route::get('/get-map-details',[MapFinderController::class,'loadMap']);
+    Route::get('/get-map-details',[MapFinderController::class,'loadMap'])->name('map.show');
     Route::get('/get-provider-location-details',[MapFinderController::class,'getLocationDetails']);
 
     //booking
