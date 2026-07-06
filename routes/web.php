@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 //customer routes
     Route::get('/',[CustomerController::class,'loadCustomerDashboard'])->name('customer.dashboard');
 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

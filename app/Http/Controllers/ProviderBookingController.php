@@ -24,7 +24,7 @@ class ProviderBookingController extends Controller
                               from bookings b
                               inner join user_profile up on up.user_id = b.customer_id
                               inner join users u on u.id = b.customer_id
-                              where u.is_customer = 1
+                              where (u.is_customer = 1 or u.is_provider = 1)
                               and b.provider_id = '$providerId'
                               and up.record_status = 1
                               and b.record_status = 1
