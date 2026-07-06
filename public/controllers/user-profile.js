@@ -76,8 +76,11 @@ function events(){
         let city = $('#txtCity').val();
         let profileType = $("input[name='profile_type']:checked").val();
         let groupName = $('#txtGroupName').val();
-        let profileImage = $('#fileProfilePic')[0].files[0];
-        let coverImage = $('#fileCoverPic')[0].files[0];
+        let profileInput = $('#fileProfilePic')[0];
+        let coverInput = $('#fileCoverPic')[0];
+
+        let profileImage = (profileInput && profileInput.files) ? profileInput.files[0] : null;
+        let coverImage = (coverInput && coverInput.files) ? coverInput.files[0] : null;
 
         let formData = new FormData();
 
@@ -174,10 +177,13 @@ function setUserProfile(data){
                     title:"Success!",
                     text:response.message,
                     icon:"success",
-                    timer:1500,
-                    showConfirmButton:false
-                }).then(()=>{
-                    window.location.href = response.redirect;
+                    confirmButtonText:"ok",
+                    allowOutsideClick:false,
+                    allowEscapeKey:false
+                }).then((result)=>{
+                    if(result.isConfirmed){
+                        window.location.href = response.redirect;
+                    }
                 });
             }
             else{
