@@ -18,15 +18,15 @@
 
             <div class="hidden md:flex items-center space-x-1">
                 <a href="{{ route('customer.dashboard') }}"
-                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('customer.dashboard') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
+                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('customer.dashboard') ? 'bg-slate-900/40 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
                     Home
                 </a>
                 <a href="{{ route('map.show') }}"
-                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('map.show') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
+                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('map.show') ? 'bg-slate-900/40 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
                     Maps
                 </a>
                 <a href="#"
-                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('bookings*') ? 'bg-amber-500/10 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
+                   class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('bookings*') ? 'bg-slate-900/40 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
                     Bookings
                 </a>
             </div>

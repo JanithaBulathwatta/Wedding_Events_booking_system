@@ -324,11 +324,19 @@
                             <input type="hidden" name="service_name" id="hidServiceName">
                             <input type="hidden" name="booking_date" id="hidBookingDate">
                             <input type="hidden" name="hdnAllBookingDates" id="hdnAllBookingDates">
+                            @auth
+                                <button id="btnSubmitBooking" disabled
+                                    class="w-full bg-slate-200 text-slate-400 font-bold text-xs py-3 rounded-xl transition duration-200 cursor-not-allowed uppercase tracking-wider shadow-md">
+                                    Confirm Booking
+                                </button>
+                            @else
+                                <div class="p-6 text-center">
+                                    <a href="{{ route('login') }}" class="inline-block bg-gradient-to-r from-amber-400 to-amber-500 text-slate-950 font-bold px-6 py-2.5 rounded-xl text-xs">
+                                        Login to Book Now
+                                    </a>
+                                </div>
+                            @endauth
 
-                            <button id="btnSubmitBooking" disabled
-                                class="w-full bg-slate-200 text-slate-400 font-bold text-xs py-3 rounded-xl transition duration-200 cursor-not-allowed uppercase tracking-wider shadow-md">
-                                Confirm Booking
-                            </button>
                         </form>
                     </div>
 

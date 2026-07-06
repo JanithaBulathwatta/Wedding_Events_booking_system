@@ -10,9 +10,12 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
+
+//customer routes
+    Route::get('/',[CustomerController::class,'loadCustomerDashboard'])->name('customer.dashboard');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -27,8 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-user-profile',[UserProfileController::class,'loadUserProfile'])->name('userProfile.show');
     Route::post('/set-user-profile',[UserProfileController::class,'setUserProfile']);
 
-    //customer routes
-    Route::get('/get-customer-dashboard',[CustomerController::class,'loadCustomerDashboard'])->name('customer.dashboard');
 
     //provider routes
     Route::get('/get-provider-dashboard',[ProviderController::class,'loadProviderDashboard'])->name('provider.dashboard');
