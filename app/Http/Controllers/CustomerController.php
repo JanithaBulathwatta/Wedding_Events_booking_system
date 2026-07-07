@@ -38,6 +38,10 @@ class CustomerController extends Controller
 
         $providers = DB::select($resultSQL);
 
-        return view('pages.customer-dashboard',compact('providers'));
+        $districts = DB::table('districts')->select('id','name')->get();
+
+        $serviceTypes = DB::table('service_types')->select('id','display_name_si')->get();
+
+        return view('pages.customer-dashboard',compact('providers','districts','serviceTypes'));
     }
 }

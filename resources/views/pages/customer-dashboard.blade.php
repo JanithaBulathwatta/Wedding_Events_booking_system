@@ -78,10 +78,9 @@
                         <select
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                             <option value="">All Categories</option>
-                            <option value="photography">Photography & Videography</option>
-                            <option value="catering">Catering & Food</option>
-                            <option value="decorating">Decorating & Flora</option>
-                            <option value="costume">Dress Designing & Makeup</option>
+                            @foreach ($serviceTypes as $serviceType)
+                                <option value="{{ $serviceType->id }}">{{ $serviceType->display_name_si }}</option>
+                            @endforeach
                         </select>
                     </div>
 
@@ -92,10 +91,9 @@
                         <select
                             class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                             <option value="">All Districts</option>
-                            <option value="kandy">Kandy</option>
-                            <option value="colombo">Colombo</option>
-                            <option value="galle">Galle</option>
-                            <option value="jaffna">Jaffna</option>
+                            @foreach ($districts as $district)
+                                <option value="{{ $district->id }}">{{ $district->name }}</option>
+                            @endforeach
                         </select>
                     </div>
 
