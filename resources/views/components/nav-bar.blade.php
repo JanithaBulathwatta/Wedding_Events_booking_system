@@ -29,7 +29,7 @@
                     @if (Auth::user()->is_customer == 1)
                         <a href="{{ route('customerBooking.show') }}"
                         class="px-4 py-2 rounded-2xl text-sm font-semibold transition-all duration-200 {{ request()->routeIs('customerBooking.show') ? 'bg-slate-900/40 text-amber-400 border border-amber-500/20' : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/50' }}">
-                            Bookings
+                            My Bookings
                         </a>
                     @endif
                 </div>
