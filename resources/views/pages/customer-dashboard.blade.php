@@ -249,7 +249,7 @@
 
     {{-- modal --}}
     <div id="bookingModal"
-        class="fixed inset-0 z-[1000] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm flex items-center justify-center p-4">
+        class="fixed inset-0 z-[1000] hidden overflow-y-auto bg-slate-900/60 backdrop-blur-sm items-center justify-center p-4">
 
         <div
             class="bg-white rounded-3xl shadow-2xl border border-slate-100 w-full max-w-7xl h-[90vh] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">

@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\BookingController;
+use App\Http\Controllers\CustomerBookingController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\MapFinderController;
 use App\Http\Controllers\PackageController;
@@ -54,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/get-provider-bookings',[ProviderBookingController::class,'loadProviderBookings'])->name('booking.show');
     Route::post('/set-booking-status',[ProviderBookingController::class,'setBookingStatus']);
     Route::get('/get-booking-dates',[ProviderBookingController::class,'getBookingDates']);
+
+    //customer bookings
+    Route::get('/get-customer-bookings',[CustomerBookingController::class,'loadCustomerBookings'])->name('customerBooking.show');
 });
 
 

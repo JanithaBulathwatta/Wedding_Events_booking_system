@@ -1,4 +1,3 @@
-<!-- 📱 1. MOBILE BOTTOM NAVIGATION BAR (මොබයිල් වලදී විතරක් පේන, අයිකන් විතරක් තියෙන බාර් එක) -->
 <div class="fixed bottom-0 left-0 w-full h-16 bg-slate-900 border-t border-amber-500/10 flex md:hidden items-center justify-around px-2 z-50">
 
     <!-- Dashboard Link -->
@@ -38,7 +37,6 @@
 </div>
 
 
-<!-- 💻 2. DESKTOP SIDEBAR (ලැප්ටොප්/මොබයිල් නොවන ස්ක්‍රීන් වලට විතරක් පේන ඔරිජිනල් සයිඩ් බාර් එක) -->
 <aside class="hidden md:flex w-72 min-h-screen bg-slate-900 border-r border-amber-500/10 flex-col justify-between shrink-0 font-sans px-6 py-8">
     <div class="space-y-6">
         <nav class="space-y-2 flex flex-col">
