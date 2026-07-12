@@ -21,9 +21,12 @@
                         <h3 class="font-bold text-slate-900 text-base leading-snug">{{ $booking->full_name }}</h3>
 
                     </div>
-                    <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-amber-50 text-amber-700 rounded-full border border-amber-200 shrink-0">
+                    <div id="badgeHandler-{{ $booking->id }}">
+
+                    </div>
+                    {{-- <span class="inline-flex items-center px-2.5 py-1 text-xs font-bold bg-amber-50 text-amber-700 rounded-full border border-amber-200 shrink-0">
                         <span class="w-1.5 h-1.5 rounded-full bg-amber-500 mr-1.5"></span>Pending
-                    </span>
+                    </span> --}}
                 </div>
 
                 <div class="space-y-3 pt-3 border-t border-slate-100">
@@ -57,10 +60,9 @@
                 </div>
             </div>
 
-            <div class="px-6 py-4 bg-slate-50/50 border-t border-slate-100 flex justify-end">
-                <button type="button" class="btn-cancel text-xs font-bold text-red-600 hover:text-red-800 bg-red-50 hover:bg-red-100 px-4 py-2 rounded-xl transition w-full text-center" data-id="1">
-                    Cancel Booking
-                </button>
+            <div class="flex space-x-2 w-full lg:w-auto mt-4 lg:mt-0 btnHandler"
+                id="btnHandler-{{ $booking->id }}" data-status = "{{ $booking->status }}"
+                data-id = "{{ $booking->id }}">
             </div>
         </div>
         @endforeach
@@ -171,4 +173,7 @@
 @endsection
 
 @section('customJS')
+    <script
+        src="{{ asset('controllers/customer-bookings.js') }}?v={{ filemtime(public_path('controllers/customer-bookings.js')) }}">
+    </script>
 @endsection

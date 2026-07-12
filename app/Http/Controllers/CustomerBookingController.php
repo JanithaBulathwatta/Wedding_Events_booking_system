@@ -26,4 +26,8 @@ class CustomerBookingController extends Controller
 
         return view('pages.customer-booking',compact('bookings'));
     }
+
+    public function setBookingStatus(Request $request){
+        
+    }
 }

@@ -58,6 +58,7 @@ Route::middleware('auth')->group(function () {
 
     //customer bookings
     Route::get('/get-customer-bookings',[CustomerBookingController::class,'loadCustomerBookings'])->name('customerBooking.show');
+    Route::get('/set-customer-booking-status',[CustomerBookingController::class,'setBookingStatus']);
 });
 
 
