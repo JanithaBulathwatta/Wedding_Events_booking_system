@@ -80,7 +80,7 @@
 
                         <div class="flex space-x-2 w-full lg:w-auto mt-4 lg:mt-0 btnHandler"
                             id="btnHandler-{{ $booking->id }}" data-status = "{{ $booking->status }}"
-                            data-id = "{{ $booking->id }}">
+                            data-id = "{{ $booking->id }}" data-date = "{{ $booking->booking_date }}">
                         </div>
                     </div>
                 </div>

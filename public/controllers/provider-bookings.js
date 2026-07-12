@@ -11,8 +11,9 @@ function events(){
         let container = $(this);
         let status = parseInt(container.data('status'));
         let id = container.data('id');
+        let bookedDate = container.data('date');
 
-        buttonHandler(status, id, container);
+        buttonHandler(status, id, container, bookedDate);
 
         let badgeContainer = $(`#badgeHandler-${id}`);
         renderStatusBadge(badgeContainer, status);
@@ -22,9 +23,11 @@ function events(){
 
         let button  = $(this);
         let bookingId = button.data('booking-id');
+        let bookedDate = button.data('booked-date');
         let newStatus = parseInt(button.data('new-status'));
         let container = $(`#btnHandler-${bookingId}`);
         let badgeContainer = $(`#badgeHandler-${bookingId}`);
+        const today = new Date().toISOString().split('T')[0];
         container.data('status', newStatus);
 
         let message = "";
@@ -38,6 +41,18 @@ function events(){
             message = "Do you want Reject the Request?";
         }
 
+        if(newStatus == 2 && bookedDate > today){
+            Swal.fire({
+                title: "Warning!",
+                text: 'You cannot complete the task before the booked date arrives.',
+                icon: "warning",
+                confirmButtonText: "OK",
+                allowOutsideClick:false,
+                allowEscapeKey:false
+            });
+            return;
+        }
+
         Swal.fire({
             title: 'Are you sure?',
             text: message,
@@ -49,7 +64,7 @@ function events(){
         }).then((result) => {
             if (result.isConfirmed){
 
-                buttonHandler(newStatus,bookingId,container);
+                buttonHandler(newStatus,bookingId,container,bookedDate);
                 renderStatusBadge(badgeContainer, newStatus);
 
                 let data = {
@@ -77,22 +92,22 @@ function events(){
     });
 
 }
-function buttonHandler(status, bookingId, container){
+function buttonHandler(status, bookingId, container, bookedDate){
     container.empty();
 
     if(status == 0){
         container.html(`
-            <button data-booking-id="${bookingId}" data-new-status="3" class="btn-status-update flex-1 lg:flex-none px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/60 text-xs font-semibold rounded-xl transition duration-150">
+            <button data-booking-id="${bookingId}" data-new-status="3" data-booked-date="${bookedDate}" class="btn-status-update flex-1 lg:flex-none px-4 py-2 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-200/60 text-xs font-semibold rounded-xl transition duration-150">
                 Reject
             </button>
-            <button data-booking-id="${bookingId}" data-new-status="1" class="btn-status-update flex-1 lg:flex-none px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm shadow-emerald-600/10 transition duration-150">
+            <button data-booking-id="${bookingId}" data-new-status="1" data-booked-date="${bookedDate}" class="btn-status-update flex-1 lg:flex-none px-5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl shadow-sm shadow-emerald-600/10 transition duration-150">
                 Approve Request
             </button>
         `);
     }
     else if(status == 1){
         container.html(`
-            <button data-booking-id="${bookingId}" data-new-status="2" class="btn-status-update w-full lg:w-auto px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-colors duration-150">
+            <button data-booking-id="${bookingId}" data-new-status="2" data-booked-date="${bookedDate}" class="btn-status-update w-full lg:w-auto px-5 py-2 bg-slate-800 hover:bg-slate-900 text-white text-xs font-semibold rounded-xl transition-colors duration-150">
                  <i class="fa-solid fa-circle-check mr-1.5"></i> Mark As Completed
             </button>
         `);
