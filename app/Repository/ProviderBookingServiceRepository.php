@@ -15,6 +15,16 @@ class ProviderBookingServiceRepository implements ProviderBookingServiceInterfac
         try {
             $status  = $request->status;
             $bookingId = $request->bookingId;
+            $currentDate = today()->format('Y-m-d');
+
+            $bookingDate = DB::table('bookings')->where('id',$bookingId)->value('booking_date');
+
+            if($status == 2 && $bookingDate > $currentDate ){
+                return[
+                    "status"=>400,
+                    "message"=>"You can not complete the task before the booked date come"
+                ];
+            }
 
             DB::table('bookings')
                 ->where('id',$bookingId)
@@ -46,7 +56,7 @@ class ProviderBookingServiceRepository implements ProviderBookingServiceInterfac
                         ->select('booking_date')
                         ->where('provider_id',$providerId)
                         ->where('record_status',1)
-                        ->where('status',0)
+                        ->whereIn('status',[0,1])
                         ->get();
             return[
                 "status"=>200,
