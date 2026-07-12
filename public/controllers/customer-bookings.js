@@ -11,8 +11,6 @@ function events(){
         let status = parseInt(container.data('status'));
         let id = container.data('id');
 
-        console.log(id);
-
         buttonHandler(status, id, container);
 
         let badgeContainer = $(`#badgeHandler-${id}`);
@@ -24,7 +22,6 @@ function events(){
 
         let button  = $(this);
         let bookingId = button.data('booking-id');
-        let status = parseInt(button.data('status'));
 
         Swal.fire({
             title: 'Warning!',
@@ -37,22 +34,36 @@ function events(){
         }).then((result) => {
             if (result.isConfirmed){
 
-                buttonHandler(newStatus,bookingId,container);
-                renderStatusBadge(badgeContainer, newStatus);
-
                 let data = {
-                    status:newStatus,
                     bookingId:bookingId
                 }
 
                 $.ajax({
                     type: "POST",
-                    url: "/set-booking-status",
+                    url: "/set-customer-booking-status",
                     data: data,
                     dataType: "json",
                     success: function (response) {
-                        if(response.status == 400){
-                            Swal.fire('Error!',response.message,'error');
+                        if(response.status == 200){
+                            Swal.fire({
+                                title: "Success!",
+                                text: response.message,
+                                icon: "success",
+                                confirmButtonText: "OK",
+                                allowOutsideClick:false,
+                                allowEscapeKey:false
+                            }).then((result)=>{
+                                if(result.isConfirmed){
+                                    window.location.reload();
+                                }
+                            });
+                        }else{
+                            Swal.fire({
+                                title: "Error!",
+                                text: response.message,
+                                icon: "error",
+                                confirmButtonText: "OK"
+                            });
                         }
                     },
                     error:function(xhr){

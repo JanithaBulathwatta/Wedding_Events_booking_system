@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CustomerBookingService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -28,6 +29,7 @@ class CustomerBookingController extends Controller
     }
 
     public function setBookingStatus(Request $request){
-        
+        $response = CustomerBookingService::setBookingStatus($request);
+        return response()->json($response);
     }
 }
