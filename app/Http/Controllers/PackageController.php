@@ -29,4 +29,9 @@ class PackageController extends Controller
         return response()->json($response);
     }
 
+    public function updatePackageDetails(Request $request){
+        $response = PackageService::updatePackageDetails($request);
+        return response()->json($response);
+    }
+
 }

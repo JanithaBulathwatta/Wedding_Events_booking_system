@@ -14,4 +14,9 @@ class PackageService{
         $result = app()->make(PackageServiceInterface::class)->getPackageDetails($request);
         return $result;
     }
+
+    public static function updatePackageDetails($request){
+        $result = app()->make(PackageServiceInterface::class)->updatePackageDetails($request);
+        return $result;
+    }
 }

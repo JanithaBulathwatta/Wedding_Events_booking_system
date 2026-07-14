@@ -65,4 +65,8 @@ class PackageServiceRepository implements PackageServiceInterface{
         ];
     }
 
+    public function updatePackageDetails($request){
+        dd($request->all());
+    }
+
 }

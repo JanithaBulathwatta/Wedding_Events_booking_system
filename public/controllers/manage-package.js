@@ -7,20 +7,61 @@ function validations(){
 
 function events(){
 
-    $('#btnAddNew').on('click', function(e) {
-        e.preventDefault();
-        $('#packageForm')[0].reset();
-        $('#packageId').val('');
-        $('#modalTitle').text('Add New Package');
-        resetFeaturesContainer();
-        openModal();
-    });
+        $('#btnAddNew').on('click', function(e) {
+            e.preventDefault();
+            $('#packageForm')[0].reset();
+            $('#packageId').val('');
+            $('#btnUpdatePackage').hide();
+            $('#btnSavePackage').show();
+            $('#modalTitle').text('Add New Package');
+            resetFeaturesContainer();
+            openModal();
+        });
 
         $(document).on('click', '.btn-edit', function() {
-            let id = $(this).data('id');
+            let packageId = $(this).data('id');
+            let serviceType = $(this).data('service-type');
+            let packageType = $(this).data('package-type');
+            let description = $(this).data('description');
+            let price = $(this).data('price');
+
+            $('#cmbServiceType').val(serviceType);
+            $('#cmbPackageType').val(packageType);
+            $('#txtPackagePrice').val(price);
+            $('#txtPackageDescription').val(description);
+            $('#packageId').val(packageId);
+
+            $('#btnUpdatePackage').show();
+            $('#btnSavePackage').hide();
             $('#modalTitle').text('Edit Package');
-            // $.get('/provider/packages/' + id, function(data) { ... binding logic }
             openModal();
+        });
+
+        $(document).on('click','#btnUpdatePackage',function(e){
+            e.preventDefault();
+            let serviceType = $('#cmbServiceType').val();
+            let packageType = $('#cmbPackageType').val();
+            let price = $('#txtPackagePrice').val();
+            let description = $('#txtPackageDescription').val();
+            let packageId = $('#packageId').val();
+
+            let data = {
+                serviceType:serviceType,
+                packageType:packageType,
+                price:price,
+                description:description,
+                packageId:packageId
+            }
+
+            $.ajax({
+                type: "post",
+                url: "/set-update-package-details",
+                data: data,
+                dataType: "json",
+                success: function (response) {
+
+                }
+            });
         });
 
         $(document).on('click', '.btn-delete', function() {
@@ -129,6 +170,7 @@ function getPackageDetails(){
         success: function (response) {
             if(response.status == 200){
                 let result = response.resultSet;
+                console.log(result);
                 $('#packagesGrid').empty();
                 result.forEach(function(pkg){
                     let htmlItem =
@@ -153,7 +195,7 @@ function getPackageDetails(){
 
                         <div class="flex space-x-3 mt-6 border-t border-slate-800/60 pt-4">
                             <button class="btn-edit flex-1 bg-slate-800 hover:bg-slate-700 text-amber-400 text-xs font-semibold py-2.5 rounded-xl flex items-center justify-center space-x-1.5 transition"
-                                data-id="${pkg.id}">
+                                data-id="${pkg.id}" data-service-type="${pkg.service_type_id}" data-package-type="${pkg.package_type_id}" data-description="${pkg.description}" data-price="${pkg.price}">
                                 <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
                                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z"></path>
                                 </svg>

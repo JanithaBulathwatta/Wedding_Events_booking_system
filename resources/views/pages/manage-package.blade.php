@@ -37,7 +37,7 @@
         </div>
 
         <div id="packagesGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-            
+
         </div>
 
 
@@ -67,6 +67,7 @@
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type</label>
                     <select id="cmbServiceType" name="cmbServiceType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
+                        <option selected>--Select--</option>
                         @foreach ($serviceTypes as $type)
                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
@@ -77,6 +78,7 @@
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Package Type</label>
                     <select id="cmbPackageType" name="cmbPackageType"
                         class="w-full bg-slate-950 border border-slate-800 focus:border-amber-500 rounded-xl px-4 py-3 text-sm text-slate-200 focus:outline-none transition">
+                        <option selected>--Select--</option>
                         @foreach ($packageTypes as $type)
                             <option value="{{ $type->id }}">{{ $type->name }}</option>
                         @endforeach
@@ -102,6 +104,9 @@
                     class="flex-1 border border-slate-700 text-slate-300 font-medium py-3 rounded-xl hover:bg-slate-800 transition modal-close-trigger">Cancel</button>
                 <button id="btnSavePackage"
                     class="flex-1 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl hover:bg-amber-600 transition">Save
+                    Package</button>
+                <button id="btnUpdatePackage"
+                    class="flex-1 bg-amber-500 text-slate-950 font-bold py-3 rounded-xl hover:bg-amber-600 transition hidden">Update
                     Package</button>
             </div>
 
