@@ -213,8 +213,14 @@ function initModalCalendar(calenderEvents,bookingDates) {
             events:calenderEvents,
 
             selectAllow: function(selectInfo) {
-                let clickedDate = selectInfo.startStr;
-                if (bookingDates.includes(clickedDate)) {
+                let clickedDateStr = selectInfo.startStr;
+                let todayStr = new Date().toISOString().split('T')[0];
+
+                if (clickedDateStr < todayStr) {
+                    return false;
+                }
+
+                if (bookingDates.includes(clickedDateStr)) {
                     return false;
                 }
                 return true;

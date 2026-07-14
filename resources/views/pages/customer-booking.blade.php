@@ -18,7 +18,7 @@
             <div class="p-6">
                 <div class="flex items-start justify-between gap-3 mb-4">
                     <div>
-                        <h3 class="font-bold text-slate-900 text-base leading-snug">{{ $booking->full_name }}</h3>
+                        <h3 class="font-bold text-slate-900 text-base leading-snug">{{ $booking->display_name }}</h3>
 
                     </div>
                     <div id="badgeHandler-{{ $booking->id }}">

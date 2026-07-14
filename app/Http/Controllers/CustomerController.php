@@ -26,7 +26,7 @@ class CustomerController extends Controller
                              inner join packages p on p.user_id = u.id
                              inner join package_type pt on p.package_type_id = pt.id
                              inner join service_types st on p.service_type_id = st.id
-                             left join bookings b on u.id = b.provider_id and b.record_status = 1
+                             left join bookings b on u.id = b.provider_id and b.record_status = 1 and b.status = 1
                              where u.is_provider = 1
                              and u.record_status  = 1
                              and sp.record_status  = 1
