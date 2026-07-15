@@ -110,10 +110,57 @@ function events(){
 
         $(document).on('click', '.btn-delete', function() {
             let id = $(this).data('id');
-            if(confirm('Are you sure you want to delete this package?')) {
-                // $.ajax logic here
-                alert('Deleted id: ' + id);
-            }
+            Swal.fire({
+                title:"Warning!",
+                text:"Do you want to delete this package ?",
+                icon:"warning",
+                showCancelButton:true,
+                confirmButtonText:"Yes",
+                confirmButtonColor: '#d33',
+                cancelButtonColor: '#3085d6',
+            }).then((result)=>{
+                if(result.isConfirmed){
+
+                    let data = {
+                        id:id
+                    }
+
+                    $.ajax({
+                        type: "POST",
+                        url: "/set-delete-package",
+                        data: data,
+                        dataType: "json",
+                        success: function (response) {
+                            if(response.status == 200){
+                                Swal.fire({
+                                    title:"Success!",
+                                    text:response.message,
+                                    icon:"success",
+                                    confirmButtonText:"ok",
+                                    allowOutsideClick:false,
+                                    allowEscapeKey:false
+                                }).then((result)=>{
+                                    if(result.isConfirmed){
+                                        window.location.reload();
+                                    }
+                                })
+                            }else{
+                                Swal.fire({
+                                    title:"Error!",
+                                    text:response.message,
+                                    icon:"error",
+                                    confirmButtonText:"ok",
+                                    allowOutsideClick:false,
+                                    allowEscapeKey:false
+                                });
+                            }
+                        },
+                        error:function(xhr){
+                            console.log(xhr.responseText);
+                        }
+                    });
+                }
+            });
         });
 
         $('#btnSavePackage').on('click', function(e) {

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/set-package-details',[PackageController::class,'setPackageDetails']);
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
     Route::post('/set-update-package-details',[PackageController::class,'updatePackageDetails']);
+    Route::post('/set-delete-package',[PackageController::class,'setDeletePackage']);
 
     //service provider dashboard routes
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);

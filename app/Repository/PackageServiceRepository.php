@@ -68,7 +68,7 @@ class PackageServiceRepository implements PackageServiceInterface{
     }
 
     public function updatePackageDetails($request){
-        
+
         $serviceType = $request->serviceType;
         $packageType = $request->packageType;
         $price = $request->price;
@@ -96,6 +96,35 @@ class PackageServiceRepository implements PackageServiceInterface{
             return[
                 "status"=>400,
                 "message"=>"Update Process Failed"
+            ];
+        }
+    }
+
+    public function setDeletePackage($request){
+        
+        $packageId = $request->id;
+        $userId = Auth::id();
+
+        try {
+            DB::table('packages')
+                ->where('id',$packageId)
+                ->where('user_id',$userId)
+                ->update([
+                    "record_status"=>0,
+                    "updated_at"=>Carbon::now()
+                ]);
+
+            return[
+                "status"=>200,
+                "message"=>"Package Deleted Succuessfully"
+            ];
+
+        } catch (Exception $e) {
+            Log::error('package delete error: ',$e->getMessage());
+
+            return[
+                "status"=>400,
+                "message"=>"Failed to Delete the Package"
             ];
         }
     }

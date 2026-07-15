@@ -34,4 +34,9 @@ class PackageController extends Controller
         return response()->json($response);
     }
 
+    public function setDeletePackage(Request $request){
+        $response = PackageService::setDeletePackage($request);
+        return response()->json($response);
+    }
+
 }

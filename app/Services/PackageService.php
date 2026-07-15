@@ -19,4 +19,9 @@ class PackageService{
         $result = app()->make(PackageServiceInterface::class)->updatePackageDetails($request);
         return $result;
     }
+
+    public static function setDeletePackage($request){
+        $result = app()->make(PackageServiceInterface::class)->setDeletePackage($request);
+        return $result;
+    }
 }
