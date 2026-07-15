@@ -94,10 +94,11 @@
     </div>
 
     <div id="mobile-menu" class="hidden md:hidden bg-slate-950 border-t border-slate-900 px-4 py-4 space-y-3">
-        <a href="#" class="block px-4 py-2.5 rounded-xl bg-amber-500/10 text-amber-400 font-medium">Home</a>
-        <a href="#" class="block px-4 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition font-medium">Services</a>
-        <a href="#" class="block px-4 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition font-medium">About Us</a>
-        <a href="#" class="block px-4 py-2.5 rounded-xl text-slate-300 hover:bg-slate-900 transition font-medium">Contact</a>
+        <a href="{{ route('customer.dashboard') }}" class="block px-4 py-2.5 rounded-xl {{ request()->routeIs('customer.dashboard') ? 'bg-amber-500/10 text-amber-400 font-medium' : 'text-slate-300 hover:bg-slate-900 transition font-medium' }}">Home</a>
+        <a href="{{ route('map.show') }}" class="block px-4 py-2.5 rounded-xl {{ request()->routeIs('map.show') ? 'bg-amber-500/10 text-amber-400 font-medium' : 'text-slate-300 hover:bg-slate-900 transition font-medium' }}">Map</a>
+        @if (Auth::check() && Auth::user()->is_customer == 1)
+            <a href="{{ route('customerBooking.show') }}" class="block px-4 py-2.5 rounded-xl {{ request()->routeIs('customerBooking.show') ? 'bg-amber-500/10 text-amber-400 font-medium' : 'text-slate-300 hover:bg-slate-900 transition font-medium' }}">My Booking</a>
+        @endif
 
         <div class="border-t border-slate-900 pt-4 mt-2 space-y-2">
             @auth
@@ -124,7 +125,7 @@
 </nav>
 
 <script>
-    // Profile Dropdown Toggle
+
     const profileBtn = document.getElementById('profile-menu-btn');
     const profileDropdown = document.getElementById('profile-dropdown-menu');
 
@@ -134,7 +135,7 @@
             profileDropdown.classList.toggle('hidden');
         });
 
-        // පිටත ක්ලික් කළොත් ක්ලෝස් වෙන්න
+
         document.addEventListener('click', function(e) {
             if (!document.getElementById('profile-dropdown-wrapper').contains(e.target)) {
                 profileDropdown.classList.add('hidden');
@@ -142,7 +143,7 @@
         });
     }
 
-    // Mobile Menu Toggle
+
     document.getElementById('mobile-menu-btn').addEventListener('click', function() {
         const menu = document.getElementById('mobile-menu');
         const openIcon = document.getElementById('menu-icon-open');
