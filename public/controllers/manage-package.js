@@ -25,6 +25,11 @@ function events(){
             let description = $(this).data('description');
             let price = $(this).data('price');
 
+            $('#hdnServiceType').val(serviceType);
+            $('#hdnPackageType').val(packageType);
+            $('#hdnPrice').val(price);
+            $('#hdnDescription').val(description);
+
             $('#cmbServiceType').val(serviceType);
             $('#cmbPackageType').val(packageType);
             $('#txtPackagePrice').val(price);
@@ -44,6 +49,21 @@ function events(){
             let price = $('#txtPackagePrice').val();
             let description = $('#txtPackageDescription').val();
             let packageId = $('#packageId').val();
+
+            let oldServiceType = $('#hdnServiceType').val();
+            let oldPackageType = $('#hdnPackageType').val();
+            let oldPrice       = $('#hdnPrice').val();
+            let oldDescription = $('#hdnDescription').val();
+
+            if(serviceType == oldServiceType && packageType == oldPackageType && price == oldPrice && description == oldDescription){
+                Swal.fire({
+                    title:"Warning!",
+                    text:"You shuld Update at least one criteria",
+                    icon:"warning",
+                    confirmButtonText:"ok"
+                });
+                return;
+            }
 
             let data = {
                 serviceType:serviceType,

@@ -62,6 +62,10 @@
 
             <form id="packageForm" class="p-6 space-y-4 overflow-y-auto flex-1">
                 <input type="hidden" id="packageId" name="id">
+                <input type="hidden" id="hdnServiceType" name="hdnServiceType">
+                <input type="hidden" id="hdnPackageType" name="hdnPackageType">
+                <input type="hidden" id="hdnPrice" name="hdnPrice">
+                <input type="hidden" id="hdnDescription" name="hdnDescription">
 
                 <div class="flex flex-col space-y-1.5">
                     <label class="text-xs font-semibold text-slate-400 tracking-wide">Service Type</label>
