@@ -59,7 +59,31 @@ function events(){
                 data: data,
                 dataType: "json",
                 success: function (response) {
-
+                    if(response.status == 200){
+                        closeModal();
+                        Swal.fire({
+                            title:"Success!",
+                            text:response.message,
+                            icon:"success",
+                            confirmButtonText:'Ok',
+                            allowOutsideClick:false,
+                            allowEscapeKey:false
+                        }).then((result)=>{
+                            if(result.isConfirmed){
+                                window.location.reload();
+                            }
+                        });
+                    }else{
+                        Swal.fire({
+                            title:"Error!",
+                            text:response.message,
+                            icon:"error",
+                            confirmButtonText:"ok"
+                        });
+                    }
+                },
+                error:function(xhr){
+                    console.log(xhr.responseText);
                 }
             });
         });

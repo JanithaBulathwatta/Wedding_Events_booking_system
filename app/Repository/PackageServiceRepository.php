@@ -3,8 +3,10 @@
 namespace App\Repository;
 use App\Repository\Interfaces\PackageServiceInterface;
 use Carbon\Carbon;
+use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class PackageServiceRepository implements PackageServiceInterface{
 
@@ -66,7 +68,36 @@ class PackageServiceRepository implements PackageServiceInterface{
     }
 
     public function updatePackageDetails($request){
-        dd($request->all());
+        
+        $serviceType = $request->serviceType;
+        $packageType = $request->packageType;
+        $price = $request->price;
+        $description = $request->description;
+        $packageId = $request->packageId;
+
+        try {
+            DB::table('packages')
+                    ->where('id',$packageId)
+                    ->update([
+                        "service_type_id"=>$serviceType,
+                        "package_type_id"=>$packageType,
+                        "price"=>$price,
+                        "description"=>$description,
+                        "updated_at"=>Carbon::now()
+                    ]);
+            return[
+                "status"=>200,
+                "message"=>"Succuessfully Update the Package"
+            ];
+
+        } catch (Exception $e) {
+            Log::error("package update error: ",$e->getMessage());
+
+            return[
+                "status"=>400,
+                "message"=>"Update Process Failed"
+            ];
+        }
     }
 
 }
