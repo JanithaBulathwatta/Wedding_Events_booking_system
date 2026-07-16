@@ -111,6 +111,12 @@
             <div id="providersContainer" class="transition-opacity duration-200 w-full">
                 @include('partials.providers_list')
             </div>
+
+            {{-- <div class="text-center mt-8">
+                <button id="btnLoadMore" data-page="1" class="bg-amber-500 hover:bg-amber-600 text-white font-bold py-2 px-6 rounded-xl text-xs transition shadow-md shadow-amber-500/20">
+                    Load More Verified Providers
+                </button>
+            </div> --}}
         </div>
     </div>
 
