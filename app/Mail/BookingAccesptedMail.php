@@ -14,12 +14,10 @@ class BookingAccesptedMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public $bookingData;
+    public function __construct($bookingData)
     {
-        //
+        $this->bookingData = $bookingData;
     }
 
     /**
@@ -28,7 +26,7 @@ class BookingAccesptedMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Booking Accespted Mail',
+            subject: 'Booking Accespted ',
         );
     }
 
@@ -38,7 +36,7 @@ class BookingAccesptedMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mails.booking-accepted-customer',
         );
     }
 

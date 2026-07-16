@@ -10,7 +10,7 @@
     <div style="background: #f8fafc; padding: 15px; border-radius: 8px; border: 1px solid #e2e8f0;">
         <p><strong>Customer Name:</strong> {{ $bookingDetails['customer_name'] }}</p>
         <p><strong>Booking Date:</strong> {{ $bookingDetails['booking_date'] }}</p>
-        <p><strong>Price:</strong>Rs. {{ $bookingDetails['total_price'] }}.00</p>
+        <p><strong>Price:</strong> Rs. {{ $bookingDetails['total_price'] }}.00</p>
         <p><strong>Selected Services:</strong></p>
         <ul>
             @if(is_array($bookingDetails['services']) || is_object($bookingDetails['services']))
@@ -28,6 +28,6 @@
     </div>
 
     <p>Please check your dashboard and accept or decline this order.</p>
-    <p>Best Regards,<br>Magul Gedara Team</p>
+    <p>Best Regards,<br>Team Ashtaka</p>
 </body>
 </html>

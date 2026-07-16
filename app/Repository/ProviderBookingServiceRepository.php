@@ -1,11 +1,14 @@
 <?php
 namespace App\Repository;
+
+use App\Mail\BookingAccesptedMail;
 use App\Repository\Interfaces\ProviderBookingServiceInterface;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Mail;
 use PhpParser\Node\Stmt\TryCatch;
 
 class ProviderBookingServiceRepository implements ProviderBookingServiceInterface{
@@ -32,6 +35,46 @@ class ProviderBookingServiceRepository implements ProviderBookingServiceInterfac
                     "status"=> $status,
                     "updated_at"=>Carbon::now()
                 ]);
+            if($status == 1){
+                $booking = DB::table('bookings as b')
+                                ->join('user_profile as customer_prof', 'b.customer_id', '=', 'customer_prof.user_id')
+                                ->join('service_provider_details as provider_det', 'b.provider_id', '=', 'provider_det.user_id')
+                                ->join('user_profile as provider_prof', 'b.provider_id', '=', 'provider_prof.user_id')
+                                ->select(
+                                    'b.id as booking_id',
+                                    'b.booking_date',
+                                    'b.services',
+                                    'b.customer_id',
+                                    'customer_prof.full_name as customer_name',
+                                    'provider_det.group_name as provider_group_name',
+                                    'provider_prof.full_name as provider_real_name'
+                                )
+                                ->where('b.id', $bookingId)
+                                ->where('b.record_status', 1)
+                                ->first();
+
+
+
+                if($booking){
+                    $providerName = $booking->provider_group_name ?? $booking->provider_real_name;
+
+                    $servicesArray = json_decode($booking->services, true);
+
+                    $bookingData = [
+                        "customer_name" => $booking->customer_name,
+                        "provider_name" => $providerName,
+                        "booking_date"  => $booking->booking_date,
+                        "services"      => $servicesArray
+                    ];
+
+                    $customerEmail = DB::table('users')->where('id', $booking->customer_id)->value('email');
+
+                    if ($customerEmail) {
+                        Mail::to($customerEmail)->send(new BookingAccesptedMail($bookingData));
+                    }
+                }
+
+            }
 
             return[
                 "status"=>200,
