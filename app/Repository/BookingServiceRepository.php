@@ -1,9 +1,12 @@
 <?php
 namespace App\Repository;
+
+use App\Mail\NewBookingMail;
 use App\Repository\Interfaces\BookingServiceInterface;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Mail;
 
 class BookingServiceRepository implements BookingServiceInterface{
 
@@ -36,6 +39,19 @@ class BookingServiceRepository implements BookingServiceInterface{
             "created_at" => Carbon::now(),
             "updated_at" => Carbon::now()
         ]);
+
+        $providerName = DB::table('users')->where('id',$providerId)->value('name');
+        $bookingData = [
+            "customer_name" => Auth::user()->name,
+            "provider_name" => $providerName,
+            "booking_date" => $bookingDate,
+            "total_price"   => $totalPrice,
+            "services" => $request->selectedList
+        ];
+
+        $providerEmail = DB::table('users')->where('id',$providerId)->value('email');
+
+        Mail::to($providerEmail)->send(new NewBookingMail($bookingData));
 
         return[
             "status"=>200,

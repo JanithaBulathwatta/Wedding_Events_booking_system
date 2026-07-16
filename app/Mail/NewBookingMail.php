@@ -14,12 +14,10 @@ class NewBookingMail extends Mailable
 {
     use Queueable, SerializesModels;
 
-    /**
-     * Create a new message instance.
-     */
-    public function __construct()
+    public $bookingDetails;
+    public function __construct($bookingData)
     {
-        //
+        $this->bookingDetails = $bookingData;
     }
 
     /**
@@ -28,7 +26,7 @@ class NewBookingMail extends Mailable
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'New Booking Mail',
+            subject: 'New Booking is Available',
         );
     }
 
@@ -38,7 +36,7 @@ class NewBookingMail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'mails.new-booking-provider',
         );
     }
 
