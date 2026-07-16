@@ -6,13 +6,13 @@
 @section('content')
     <div class="min-h-screen text-slate-100 font-sans pb-24 md:pb-12">
 
-        <!-- 🔝 Top Header Section -->
+
         <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 mb-8">
             <div>
                 <h1 class="text-2xl md:text-3xl font-bold text-slate-950 tracking-wide">Manage Packages</h1>
                 <p class="text-sm text-slate-500 mt-1">Manage your services and packages here.</p>
             </div>
-            <!-- Add New Button -->
+           
             <button id="btnAddNew"
                 class="w-full sm:w-auto bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-slate-950 font-semibold px-5 py-3 rounded-xl shadow-lg shadow-amber-500/10 flex items-center justify-center space-x-2 transition duration-200">
                 <svg class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">

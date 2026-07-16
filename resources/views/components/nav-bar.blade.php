@@ -6,7 +6,7 @@
                 <a href="{{ url('/') }}" class="group flex items-center space-x-2">
                     <div class="p-1 rounded-full bg-slate-900/40 border border-amber-500/20 group-hover:scale-105 transition duration-200 shadow-md shadow-amber-500/5">
                         <img src="{{ asset('storage/images/Gemini_Generated_Image_7mjnvx7mjnvx7mjn-removebg-preview.png') }}"
-                            alt="අෂ්ටක Logo"
+                            alt="Logo"
                             class="w-14 h-14 object-contain rounded-full transition-all duration-200"
                             style="width: 56px; height: 56px; image-rendering: -webkit-optimize-contrast; image-rendering: crisp-edges;">
                     </div>

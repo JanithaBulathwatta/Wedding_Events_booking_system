@@ -39,7 +39,7 @@
 
 @section('content')
     <div class="bg-slate-50 min-h-screen text-slate-800 font-sans pb-12">
-        <div class="relative bg-white py-12 px-4 sm:px-6 lg:px-8 text-center overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out min-h-[250px] flex items-center justify-center rounded-b-3xl"
+        <div class="relative bg-white py-12 px-4 sm:px-6 lg:px-8 text-center overflow-hidden bg-cover bg-center transition-all duration-1000 ease-in-out min-h-[250px] flex items-center justify-center"
             style="background-image: url('{{ asset('storage/images/wed1.jpg') }}');">
             <div class="absolute inset-0 bg-slate-900/40 backdrop-blur-[2px]"></div>
             <div
@@ -58,25 +58,25 @@
             </div>
         </div>
 
-        <div class="max-w-2xl mx-auto px-4 sm:px-6 lg:px-8 -mt-2 mb-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-3 mb-8">
             <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 items-end">
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 items-end">
 
                     <!-- Search Input -->
-                    {{-- <div>
+                    <div>
                     <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Keyword Search</label>
                     <div class="relative">
-                        <input type="text" placeholder="Search provider name..."
+                        <input type="text" id="txtSearch" placeholder="Search provider name..."
                                class="w-full bg-slate-50 border border-slate-200 rounded-xl pl-4 pr-10 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                     </div>
-                </div> --}}
+                </div>
 
                     <!-- Category Dropdown -->
                     <div>
                         <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Service
                             Category</label>
                         <select
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
+                            id="cmbCategory" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                             <option value="">All Categories</option>
                             @foreach ($serviceTypes as $serviceType)
                                 <option value="{{ $serviceType->id }}">{{ $serviceType->display_name_si }}</option>
@@ -89,25 +89,13 @@
                         <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Location
                             (District)</label>
                         <select
-                            class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
+                            id = "cmbDistricts" class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
                             <option value="">All Districts</option>
                             @foreach ($districts as $district)
                                 <option value="{{ $district->id }}">{{ $district->name }}</option>
                             @endforeach
                         </select>
                     </div>
-
-                    <!-- Budget Dropdown -->
-                    {{-- <div>
-                    <label class="text-[11px] font-bold text-slate-400 uppercase tracking-wider block mb-1.5">Budget Range</label>
-                    <select class="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-2 text-xs text-slate-700 focus:border-amber-500/50 focus:ring-2 focus:ring-amber-500/10 focus:outline-none transition">
-                        <option value="">Any Budget</option>
-                        <option value="under_50">Below Rs. 50,000</option>
-                        <option value="50_100">Rs. 50,000 - Rs. 100,000</option>
-                        <option value="above_100">Above Rs. 100,000</option>
-                    </select>
-                </div> --}}
-
                 </div>
             </div>
         </div>
@@ -115,134 +103,13 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 
             <div class="flex items-center justify-between mb-6">
-                <p class="text-xs text-slate-500">Showing <span class="text-slate-900 font-bold">
-                        {{ count($providers) }}
-                    </span> verified
-                    providers</p>
-                <div class="flex items-center space-x-2">
-                    <button class="text-xs text-amber-600 font-bold hover:underline mr-2">Clear Filters</button>
-                    <select
-                        class="bg-white border border-slate-200 rounded-xl px-3 py-1.5 text-xs text-slate-600 focus:outline-none shadow-sm">
-                        <option>Sort by: Featured</option>
-                        <option>Price: Low to High</option>
-                        <option>Price: High to Low</option>
-                    </select>
-                </div>
+                <p class="text-xs text-slate-500">
+                    Showing <span class="text-slate-900 font-bold"> {{ count($providers) }} </span> verified providers
+                </p>
             </div>
 
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-
-                @foreach ($providers as $provider)
-                    <div
-                        class="group bg-white border-2 border-amber-500/40 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:border-amber-500 transition duration-300 relative">
-
-                        <span
-                            class="absolute top-3 left-3 z-10 bg-gradient-to-r from-amber-500 to-amber-600 text-white font-black text-[9px] uppercase tracking-wider px-2 py-0.5 rounded-full shadow-md">
-                            Featured
-                        </span>
-
-                        <div class="h-40 bg-slate-100 overflow-hidden relative">
-                            <img src="{{ $provider->cover_image ? asset('storage/' . $provider->cover_image) : asset('storage/images/photo.png') }}"
-                                class="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                                alt="Cover Image">
-                        </div>
-
-                        <div class="p-4 relative">
-                            <div
-                                class="absolute -top-8 right-3 h-12 w-12 rounded-full border-2 border-white bg-slate-200 overflow-hidden shadow-md">
-                                <img src="{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('storage/images/user.png') }}"
-                                    class="w-full h-full object-cover" alt="{{ $provider->name }}'s Profile Picture">
-                            </div>
-
-                            @php
-                                $serviceList = explode(',', $provider->services);
-                                $prices = explode(',',$provider->prices);
-                                $descriptions = explode(',',$provider->descriptions);
-                                $packageTypes = explode(',',$provider->package_names);
-                                $bookingDtaes = explode(',',$provider->dates);
-                                $serviceCount = count($serviceList);
-                            @endphp
-
-                            @if ($serviceCount > 1)
-                                <div class="mt-2 overflow-hidden relative w-full ">
-                                    <div
-                                        class="absolute inset-y-0 left-0 w-6 bg-gradient-to-r from-slate-50 to-transparent z-10 pointer-events-none">
-                                    </div>
-                                    <div
-                                        class="absolute inset-y-0 right-0 w-6 bg-gradient-to-l from-slate-50 to-transparent z-10 pointer-events-none">
-                                    </div>
-
-                                    <div class="animate-marquee gap-2">
-                                        @php
-                                            $doubleServices = array_merge($serviceList, $serviceList);
-                                        @endphp
-
-                                        @foreach ($doubleServices as $service)
-                                            <span
-                                                class="inline-block bg-white text-amber-700 text-[9px] px-2.5 py-0.5 rounded-md font-bold border border-amber-200/70 uppercase tracking-wide whitespace-nowrap shadow-sm mx-0.5">
-                                                {{ trim($service) }}
-                                            </span>
-                                        @endforeach
-                                    </div>
-                                </div>
-                            @else
-                                <div class="mt-2 flex flex-wrap gap-1.5">
-                                    @foreach ($serviceList as $service)
-                                        <span
-                                            class="inline-block bg-amber-50 text-amber-700 text-[9px] px-2.5 py-0.5 rounded-md font-bold border border-amber-200/60 uppercase tracking-wide">
-                                            {{ trim($service) }}
-                                        </span>
-                                    @endforeach
-                                </div>
-                            @endif
-                            @if ($provider->group_name == null)
-                                <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
-                                    {{ $provider->name }}
-                                </h4>
-                            @else
-                                <h4 class="text-sm font-bold text-slate-900 mt-2 truncate pr-10">
-                                    {{ $provider->group_name }}
-                                </h4>
-                            @endif
-
-                            <div class="flex items-center space-x-3 mt-2 text-[11px] text-slate-500">
-                                <span class="flex items-center">
-                                    <svg class="w-3 h-3 text-slate-400 mr-0.5" fill="none" stroke="currentColor"
-                                        viewBox="0 0 24 24">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                    </svg>
-                                    {{ $provider->city }} </span>
-                                <span class="flex items-center text-amber-500 font-bold">
-                                    ⭐ 4.9 <span class="text-slate-400 font-normal ml-0.5">(42)</span>
-                                </span>
-                            </div>
-
-                            <div class="border-t border-slate-100 my-3"></div>
-
-                            <div class="flex items-center justify-between">
-                                <div>
-                                    <p class="text-[9px] text-slate-400 font-bold uppercase tracking-wider">Contact</p>
-                                    <p class="text-sm font-black text-slate-900">{{ $provider->mobile }}</p>
-                                </div>
-                                <button
-                                    class="px-3 py-1.5 text-[11px] font-bold rounded-xl bg-slate-900 text-white hover:bg-amber-500 hover:text-slate-950 transition duration-200 no-underline btnViewProfile"
-                                    data-name = "{{ $provider->name }}" data-groupname = "{{ $provider->group_name }}" data-mobile = "{{ $provider->mobile }}"
-                                    data-profilepic = "{{ $provider->profile_picture ? asset('storage/' . $provider->profile_picture) : asset('storage/images/user.png') }}"
-                                    data-coverimage = "{{ $provider->cover_image ? asset('storage/' . $provider->cover_image) : asset('storage/images/photo.png') }}"
-                                    data-services="{{ json_encode($serviceList) }}"
-                                    data-descriptions = "{{ json_encode($descriptions) }}"
-                                    data-prices = "{{ json_encode($prices) }}"
-                                    data-packageTypes = "{{ json_encode($packageTypes) }}"
-                                    data-providerid = "{{ $provider->id }}"
-                                    data-bookingdates = "{{ json_encode($bookingDtaes) }}"
-                                    >
-                                    View Profile
-                            </button>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
+            <div id="providersContainer" class="transition-opacity duration-200 w-full">
+                @include('partials.providers_list')
             </div>
         </div>
     </div>
@@ -350,4 +217,7 @@
     <script
         src="{{ asset('controllers/customer-dashboard.js') }}?v={{ filemtime(public_path('controllers/customer-dashboard.js')) }}">
     </script>
+    <script>
+    window.dashboardFilterUrl = "{{ route('customer.dashboard') }}";
+</script>
 @endsection

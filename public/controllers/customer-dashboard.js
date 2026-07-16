@@ -2,7 +2,9 @@
     let selectedDate = null;
     let selectedService = null;
 function init(){
-
+    $('#txtSearch').val('');
+    $('#cmbCategory').val('');        
+    $('#cmbDistricts').val('');
 }
 function validations(){
 
@@ -170,7 +172,41 @@ function events(){
         });
 
     });
+
+    $('#txtSearch, #cmbCategory, #cmbDistricts').on('keyup change',function(e){
+        fetchFilteredProviders();
+    });
 }
+
+    function fetchFilteredProviders() {
+
+        let search = $('#txtSearch').val();
+        let category_id = $('#cmbCategory').val();
+        let district_id = $('#cmbDistricts').val();
+
+        $.ajax({
+            url: window.dashboardFilterUrl,
+            method: "GET",
+            data: {
+                search: search,
+                category_id: category_id,
+                district_id: district_id
+            },
+            beforeSend: function() {
+                $('#providersContainer').css('opacity', '0.5');
+            },
+            success: function(response) {
+                $('#providersContainer').html(response);
+                $('#providersContainer').css('opacity', '1');
+            },
+            error: function(xhr) {
+                console.error("Status Code: ", xhr.status);
+                console.error("Actual Laravel Error: ", xhr.responseText);
+
+                $('#providersContainer').css('opacity', '1');
+            }
+        });
+    }
 
 function checkFormValidity() {
 
