@@ -11,27 +11,32 @@ use App\Http\Controllers\ProviderController;
 use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
 
-//customer routes
+//home (any of the users come to this route)
     Route::get('/',[CustomerController::class,'loadCustomerDashboard'])->name('customer.dashboard');
-
-
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //map
+    Route::get('/get-map-details',[MapFinderController::class,'loadMap'])->name('map.show');
+    Route::get('/get-provider-location-details',[MapFinderController::class,'getLocationDetails']);
+
+    //booking
+    Route::post('/set-booking-details',[BookingController::class,'setBookingDetails']);
+
+    //customer bookings
+    Route::get('/get-customer-bookings',[CustomerBookingController::class,'loadCustomerBookings'])->name('customerBooking.show');
+    Route::post('/set-customer-booking-status',[CustomerBookingController::class,'setBookingStatus']);
+});
+
+Route::middleware(['auth','provider'])->group(function(){
+
     //user profile routes
     Route::get('/get-user-profile',[UserProfileController::class,'loadUserProfile'])->name('userProfile.show');
     Route::post('/set-user-profile',[UserProfileController::class,'setUserProfile']);
-
 
     //provider routes
     Route::get('/get-provider-dashboard',[ProviderController::class,'loadProviderDashboard'])->name('provider.dashboard');
@@ -46,21 +51,11 @@ Route::middleware('auth')->group(function () {
     //service provider dashboard routes
     Route::get('/get-package-details',[PackageController::class,'getPackageDetails']);
 
-    //map
-    Route::get('/get-map-details',[MapFinderController::class,'loadMap'])->name('map.show');
-    Route::get('/get-provider-location-details',[MapFinderController::class,'getLocationDetails']);
-
-    //booking
-    Route::post('/set-booking-details',[BookingController::class,'setBookingDetails']);
-
     //provider-bookings
     Route::get('/get-provider-bookings',[ProviderBookingController::class,'loadProviderBookings'])->name('booking.show');
     Route::post('/set-booking-status',[ProviderBookingController::class,'setBookingStatus']);
     Route::get('/get-booking-dates',[ProviderBookingController::class,'getBookingDates']);
 
-    //customer bookings
-    Route::get('/get-customer-bookings',[CustomerBookingController::class,'loadCustomerBookings'])->name('customerBooking.show');
-    Route::post('/set-customer-booking-status',[CustomerBookingController::class,'setBookingStatus']);
 });
 
 

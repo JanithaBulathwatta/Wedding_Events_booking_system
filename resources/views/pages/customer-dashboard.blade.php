@@ -224,6 +224,6 @@
         src="{{ asset('controllers/customer-dashboard.js') }}?v={{ filemtime(public_path('controllers/customer-dashboard.js')) }}">
     </script>
     <script>
-    window.dashboardFilterUrl = "{{ route('customer.dashboard') }}";
-</script>
+        window.dashboardFilterUrl = "{{ route('customer.dashboard') }}";
+    </script>
 @endsection
