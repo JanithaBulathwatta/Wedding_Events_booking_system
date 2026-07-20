@@ -12,7 +12,7 @@ class ProviderBookingController extends Controller
     public function loadProviderBookings(){
 
         $providerId = Auth::id();
-
+        
         $bookingSQL = "select up.full_name,
                               up.mobile,
                               up.address,
@@ -31,6 +31,7 @@ class ProviderBookingController extends Controller
                               and u.record_status = 1";
 
         $bookings = DB::select($bookingSQL);
+
 
         return view('pages.provider-bookings',compact('bookings'));
     }

@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
             'record_status' => 1,
         ]);
 
-        Mail::to($user->email)->send(new WelcomeMail($user));
+        // Mail::to($user->email)->send(new WelcomeMail($user));
 
         event(new Registered($user));
 

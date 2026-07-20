@@ -12,13 +12,17 @@ use App\Http\Controllers\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 
-//home (any of the users come to this route)
+//home (anyone can access this page)
     Route::get('/',[CustomerController::class,'loadCustomerDashboard'])->name('customer.dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    //user profile routes
+    Route::get('/get-user-profile',[UserProfileController::class,'loadUserProfile'])->name('userProfile.show');
+    Route::post('/set-user-profile',[UserProfileController::class,'setUserProfile']);
 
     //map
     Route::get('/get-map-details',[MapFinderController::class,'loadMap'])->name('map.show');
@@ -33,10 +37,6 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::middleware(['auth','provider'])->group(function(){
-
-    //user profile routes
-    Route::get('/get-user-profile',[UserProfileController::class,'loadUserProfile'])->name('userProfile.show');
-    Route::post('/set-user-profile',[UserProfileController::class,'setUserProfile']);
 
     //provider routes
     Route::get('/get-provider-dashboard',[ProviderController::class,'loadProviderDashboard'])->name('provider.dashboard');
